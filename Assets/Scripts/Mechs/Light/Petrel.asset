@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10238286764ece41b04ba8ac6642064, type: 3}
+  m_Name: Petrel
+  m_EditorClassIdentifier: 
+  mechName: Petrel
+  hpArm: 8
+  hpArmMax: 8
+  hpLeg: 8
+  hpLegMax: 8
+  hpTorso: 13
+  hpTorsoMax: 13
+  hpHead: 6
+  hpHeadMax: 6
+  tpMax: 20
+  tpCurrent: 20
+  movementSpeedInHexes: 10
+  movementCostPerHex: 1
+  armorHead: 0
+  armorTorso: 1
+  armorLeg: 1
+  armorArm: 1
+  shieldPoints: 0
+  mechPrefab: {fileID: 0}

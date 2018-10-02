@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1ba48075672f073429a720469a9c17e9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - lowHex: {fileID: 2100000, guid: f19a5b174bd513849ba6cc5a61544c15, type: 2}
+  - midHex: {fileID: 2100000, guid: 28d0a3083aa947343b89eb9b44e46ac5, type: 2}
+  - highHex: {fileID: 2100000, guid: 19d0ce10e346e5543b0d0737e5bb08f1, type: 2}
+  - waterHex: {fileID: 2100000, guid: 9b4beeaa8a2dbe54caba19f9cefdbed8, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

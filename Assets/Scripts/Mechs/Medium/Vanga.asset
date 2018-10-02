@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10238286764ece41b04ba8ac6642064, type: 3}
+  m_Name: Vanga
+  m_EditorClassIdentifier: 
+  mechName: Vanga
+  hpArm: 11
+  hpArmMax: 11
+  hpLeg: 11
+  hpLegMax: 11
+  hpTorso: 19
+  hpTorsoMax: 19
+  hpHead: 9
+  hpHeadMax: 9
+  tpMax: 30
+  tpCurrent: 30
+  movementSpeedInHexes: 5
+  movementCostPerHex: 2
+  armorHead: 1
+  armorTorso: 2
+  armorLeg: 2
+  armorArm: 2
+  shieldPoints: 12
+  mechPrefab: {fileID: 0}

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10238286764ece41b04ba8ac6642064, type: 3}
+  m_Name: Kestrel
+  m_EditorClassIdentifier: 
+  mechName: Kestrel
+  hpArm: 10
+  hpArmMax: 10
+  hpLeg: 10
+  hpLegMax: 10
+  hpTorso: 17
+  hpTorsoMax: 17
+  hpHead: 8
+  hpHeadMax: 8
+  tpMax: 30
+  tpCurrent: 30
+  movementSpeedInHexes: 6
+  movementCostPerHex: 2
+  armorHead: 1
+  armorTorso: 1
+  armorLeg: 2
+  armorArm: 2
+  shieldPoints: 0
+  mechPrefab: {fileID: 0}

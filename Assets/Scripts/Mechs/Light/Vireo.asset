@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10238286764ece41b04ba8ac6642064, type: 3}
+  m_Name: Vireo
+  m_EditorClassIdentifier: 
+  mechName: Vireo
+  hpArm: 6
+  hpArmMax: 6
+  hpLeg: 6
+  hpLegMax: 6
+  hpTorso: 9
+  hpTorsoMax: 9
+  hpHead: 3
+  hpHeadMax: 3
+  tpMax: 20
+  tpCurrent: 20
+  movementSpeedInHexes: 14
+  movementCostPerHex: 1
+  armorHead: 0
+  armorTorso: 1
+  armorLeg: 0
+  armorArm: 0
+  shieldPoints: 0

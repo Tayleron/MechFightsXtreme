@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10238286764ece41b04ba8ac6642064, type: 3}
+  m_Name: Jakamar
+  m_EditorClassIdentifier: 
+  mechName: Jakamar
+  hpArm: 13
+  hpArmMax: 13
+  hpLeg: 13
+  hpLegMax: 13
+  hpTorso: 23
+  hpTorsoMax: 23
+  hpHead: 11
+  hpHeadMax: 11
+  tpMax: 45
+  tpCurrent: 45
+  movementSpeedInHexes: 4
+  movementCostPerHex: 3
+  armorHead: 2
+  armorTorso: 2
+  armorLeg: 3
+  armorArm: 3
+  shieldPoints: 0
+  mechPrefab: {fileID: 0}
