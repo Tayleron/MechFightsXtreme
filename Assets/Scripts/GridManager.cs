@@ -17,6 +17,14 @@ public class GridManager : MonoBehaviour
 	//Allow setSizes function to store the dimensions of the Prefab
 	private float hexWidth;
 	private float hexHeight;
+  //Set default Elevation of Hexes when not randomizing
+  public int setDefaultElevation = 0;
+  //Randomizer variables
+  public bool RandomOnOff = true;
+  //percentage of hexes that will be water when randomizing maps
+  public float waterPercent = .25f;
+  public bool LabelsOnOff = true;
+
 	//Get the dimensions to allow proper spacing of the tiles
 	void setSizes() 
 	{
@@ -37,6 +45,7 @@ public class GridManager : MonoBehaviour
   //method used to convert hex grid coordinates to game world coordinates
   public Vector3 calcWorldCoord(Vector2 gridPos)
   {
+   // Debug.Log(gridPos.x +" "+ gridPos.y);
     //Position of the first hex tile
     Vector3 initPos = calcInitPos();
     //Every second row is offset by half of the tile width
@@ -65,6 +74,22 @@ public class GridManager : MonoBehaviour
         Vector2 gridPos = new Vector2(x, y);
         hex.transform.position = calcWorldCoord(gridPos);
         hex.transform.parent = hexGridGO.transform;
+        //Name the hexes and give them their Coordinates
+        hex.name = "Hex_" + x + "_" + y;
+        hex.GetComponent<Hex>().x = (int)x;
+        hex.GetComponent<Hex>().y = (int)y;
+        //Labels for the hex coordinates
+        if (LabelsOnOff) {
+          hex.GetComponentInChildren<TextMesh>().text = string.Format("{0},{1}", x, y);
+        }
+        //Set Hexes to the default height as specified above
+        hex.GetComponent<Hex>().Elevation = setDefaultElevation;
+        //Toggle for randomizer
+        if (RandomOnOff) {
+          //Add random Elevation and Random Water
+          hex.GetComponent<Hex>().Elevation = UnityEngine.Random.Range(0, 3);
+          hex.GetComponent<Hex>().isWater = UnityEngine.Random.value < waterPercent;
+        }
       }
     }
   }
@@ -79,16 +104,6 @@ public class GridManager : MonoBehaviour
     }
   }
 
-  //GUI buttons to allow for changes
-  void OnGUI() {
-    if (GUI.Button(new Rect(10,10,100,30), "Save")){
-      control.SaveMap();
-    }
-    if (GUI.Button(new Rect(10,50,100,30), "Load")) {
-      control.LoadMap();
-    }
-  }
-
 	// Use this for initialization
 	void Start () 
 	{
@@ -96,36 +111,16 @@ public class GridManager : MonoBehaviour
 		createGrid();
 	}
 
-  //Adding the save map function
-  public void SaveMap () {
-    BinaryFormatter bf = new BinaryFormatter();
-    FileStream file = File.Create(Application.persistentDataPath + "/map.dat");
-    
-    MapData data = new MapData();
-    data.Hex = Hex;
-
-    bf.Serialize(file, data);
-    file.Close();
-  }
-
-  //adding the load map function  
-  public void LoadMap () {
-    if(File.Exists(Application.persistentDataPath + "map.dat")) 
-    {
-      BinaryFormatter bf = new BinaryFormatter();
-      FileStream file = File.Open(Application.persistentDataPath + "/map.dat", FileMode.Open);
-      
-      MapData data = (MapData)bf.Deserialize(file);
-      file.Close();
-
-      Hex = data.Hex;
-    }
-
-  }  
-}
-
-[Serializable]
-class MapData
-{
-  public GameObject Hex;
+  //GUI buttons to allow for changes
+  // void OnGUI() {
+  //   if (GUI.Button(new Rect(10,10,100,30), "Save")){
+  //     control.SaveMap();
+  //   }
+  //   if (GUI.Button(new Rect(10,50,100,30), "Load")) {
+  //     control.LoadMap();
+  //   }
+  //   if (GUI.Button(new Rect(10,90,100,30), "Randomize")) {
+  //     control.createGrid();
+  //   }
+  // }
 }
