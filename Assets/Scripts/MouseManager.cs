@@ -6,15 +6,14 @@ using UnityEngine.EventSystems;
 public class MouseManager : MonoBehaviour {
 
 	MechStats selectedMech;
+  Hex selectedHex;
 
 	//req for camera drag controls
 	bool isDraggingCamera = false;
 	Vector3 LastMousePosition;
 	//zoom levels
-  public float minHeight = 10;
-  public float maxHeight = 50;
-  float lowZoom = 12;
-  float highZoom = 47;
+  public float cameraMinHeight = 10f;
+  public float cameraMaxHeight = 50f;
 	
 	void Start() {
 			
@@ -76,16 +75,16 @@ public class MouseManager : MonoBehaviour {
 		if(Mathf.Abs(scrollAmount) > 0.01f) {
 			Vector3 dir = Camera.main.transform.position - hitPos;
 			Camera.main.transform.Translate(dir * scrollAmount, Space.World);
+      Vector3 p = Camera.main.transform.position;
 
 			//set limits to the zoom in/out
-			Vector3 p = Camera.main.transform.position;
-			if (p.y < minHeight)
+			if (p.y < cameraMinHeight)
 			{
-				p.y = minHeight;
+				p.y = cameraMinHeight;
 			}
-			if (p.y > maxHeight)
+			if (p.y > cameraMaxHeight)
 			{
-				p.y = maxHeight;
+				p.y = cameraMaxHeight;
 			}
 			Camera.main.transform.position = p;
 
@@ -100,8 +99,9 @@ public class MouseManager : MonoBehaviour {
 
 		if (Input.GetMouseButtonDown(0)) 
 		{
-			Debug.Log(ourHitObject.GetComponentInChildren<Hex>().name);
-		}
+			selectedHex = ourHitObject.GetComponentInChildren<Hex>();
+      Debug.Log(selectedHex.name);
+    }
   }
 	//Click on Mech
 	void MouseOver_Mech(GameObject ourHitObject) {

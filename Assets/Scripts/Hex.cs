@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class Hex : MonoBehaviour {
 	private Renderer HexMatRend;
+  private MeshFilter HexMeshFilter;
 	public Material[] HexMaterials;
+  public Mesh[] HexMeshes;
 	public GameObject ramp;
   public GridManager grid;
 
   public int x;
   public int y;
+
+  private float HexModelYHeight;
 
 	//Elevation determines the height of the hex 
 	//Use Elevation to determine cliffs and the color/graphics hexes should be assigned
@@ -22,27 +26,32 @@ public class Hex : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
     HexMatRend = GetComponent<Renderer>();
+    HexMeshFilter = GetComponent<MeshFilter>();
     HexMatRend.enabled = true;
     HexMatRend.sharedMaterial = HexMaterials[0];
 	}
 
 	private void ElevationCheck() {
+    HexModelYHeight = HexMatRend.bounds.size.y;
     if (Elevation == 0)
     {
       HexMatRend.sharedMaterial = HexMaterials[0];
-      transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, 2);
+      HexMeshFilter.sharedMesh = HexMeshes[0];
+      transform.localPosition = new Vector3(transform.localPosition.x, HexModelYHeight, transform.localPosition.z);
       ElevationLast = 0;
     }
     else if (Elevation == 1)
     {
       HexMatRend.sharedMaterial = HexMaterials[1];
-      transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, 4);
+      HexMeshFilter.sharedMesh = HexMeshes[1];
+      transform.localPosition = new Vector3(transform.localPosition.x, HexModelYHeight, transform.localPosition.z);
       ElevationLast = 1;
     }
     else //meaning Elevation must be 2
     {
       HexMatRend.sharedMaterial = HexMaterials[2];
-      transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, 6);
+      HexMeshFilter.sharedMesh = HexMeshes[2];
+      transform.localPosition = new Vector3(transform.localPosition.x, HexModelYHeight, transform.localPosition.z);
       ElevationLast = 2;
     }
 	}
@@ -50,7 +59,8 @@ public class Hex : MonoBehaviour {
     if (isWater)
     {
       HexMatRend.sharedMaterial = HexMaterials[3];
-      transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, 1);
+      HexMeshFilter.sharedMesh = HexMeshes[3];
+      transform.localPosition = new Vector3(transform.localPosition.x, 0.05f, transform.localPosition.z);
     } else {ElevationCheck();}
 	}
 	private void RampCheck() {

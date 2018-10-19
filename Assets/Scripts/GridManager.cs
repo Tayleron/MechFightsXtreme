@@ -11,7 +11,7 @@ public class GridManager : MonoBehaviour
   public static GridManager control;
 	//Attach the Prefab Hex in unity
 	public GameObject Hex;
-	//Allow the setting of the grid size in Unity
+  //Allow the setting of the grid size in Unity
 	public int gridWidthInHexes = 10;
 	public int gridHeightInHexes = 10;
 	//Allow setSizes function to store the dimensions of the Prefab
@@ -23,7 +23,16 @@ public class GridManager : MonoBehaviour
   public bool RandomOnOff = true;
   //percentage of hexes that will be water when randomizing maps
   public float waterPercent = .25f;
+  //on off switch for Labels
   public bool LabelsOnOff = true;
+  //Used by dictionary to store Hex Coords as a string
+  private string hexCoords;
+  //input a string format "x,y" to spawn unit at that location
+  public string CoordsToSpawnAt = "2,2";
+
+
+  //Dictionary of all hexes, added to by createGrid()
+  Dictionary<string, GameObject> hexValues = new Dictionary<string, GameObject>();
 
 	//Get the dimensions to allow proper spacing of the tiles
 	void setSizes() 
@@ -58,6 +67,7 @@ public class GridManager : MonoBehaviour
     float z = initPos.z - gridPos.y * hexHeight * 0.75f;
     return new Vector3(x, 0, z);
   }
+
   //Finally the method which initialises and positions all the tiles
   void createGrid()
   {
@@ -72,7 +82,11 @@ public class GridManager : MonoBehaviour
         GameObject hex = (GameObject)Instantiate(Hex);
         //Current position in grid
         Vector2 gridPos = new Vector2(x, y);
+        //create a string to store the Coordinates
+        hexCoords = string.Format("{0},{1}", x, y);
+        //this line spreads the hexes out
         hex.transform.position = calcWorldCoord(gridPos);
+        //this line puts all the hexes under the hexgrid GameObject
         hex.transform.parent = hexGridGO.transform;
         //Name the hexes and give them their Coordinates
         hex.name = "Hex_" + x + "_" + y;
@@ -90,9 +104,22 @@ public class GridManager : MonoBehaviour
           hex.GetComponent<Hex>().Elevation = UnityEngine.Random.Range(0, 3);
           hex.GetComponent<Hex>().isWater = UnityEngine.Random.value < waterPercent;
         }
+        //Add the new hex to the hex dictionary
+        hexValues.Add(hexCoords,hex);
       }
     }
   }
+  //temp prefab holder to test spawner
+  public GameObject mechPrefab;
+  public Transform hexTran;
+
+  void spawnUnitAt(GameObject mechPrefab, string location)
+  {
+    GameObject myHex = hexValues[location];
+    hexTran = myHex.transform;
+    Instantiate(mechPrefab, myHex.transform.position, Quaternion.identity, myHex.transform);
+  }
+  
 
   //Adding persistence
   void Awake () {
@@ -103,12 +130,13 @@ public class GridManager : MonoBehaviour
       Destroy(gameObject);
     }
   }
-
 	// Use this for initialization
 	void Start () 
 	{
 		setSizes();
 		createGrid();
+    spawnUnitAt(mechPrefab, CoordsToSpawnAt);
+
 	}
 
   //GUI buttons to allow for changes
