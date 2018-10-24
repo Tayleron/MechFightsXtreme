@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Petrel
   m_EditorClassIdentifier: 
   mechName: Petrel
+  MechPrefab: {fileID: 1706490245696108, guid: 86984554b5e96744fb81de8025993e94, type: 2}
   hpArm: 8
   hpArmMax: 8
   hpLeg: 8
@@ -29,4 +30,4 @@ MonoBehaviour:
   armorLeg: 1
   armorArm: 1
   shieldPoints: 0
-  mechPrefab: {fileID: 0}
+  weight: 0

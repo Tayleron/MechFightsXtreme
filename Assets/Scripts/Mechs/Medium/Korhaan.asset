@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Korhaan
   m_EditorClassIdentifier: 
   mechName: Korhaan
+  MechPrefab: {fileID: 1706490245696108, guid: 85a9424ad4a4e834faaf812c9db311d0, type: 2}
   hpArm: 10
   hpArmMax: 10
   hpLeg: 10
@@ -29,4 +30,4 @@ MonoBehaviour:
   armorLeg: 1
   armorArm: 1
   shieldPoints: 0
-  mechPrefab: {fileID: 0}
+  weight: 0

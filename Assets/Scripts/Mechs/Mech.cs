@@ -6,6 +6,8 @@ using UnityEngine;
 public class Mech : ScriptableObject {
   
   public string mechName;
+
+  public GameObject MechPrefab;
   
   public int hpArm;
   public int hpArmMax;

@@ -346,7 +346,9 @@ MonoBehaviour:
   RandomOnOff: 1
   waterPercent: 0.25
   LabelsOnOff: 1
-  hexCoords: 
+  mechPrefabToSpawn: {fileID: 1706490245696108, guid: 86984554b5e96744fb81de8025993e94,
+    type: 2}
+  CoordsToSpawnAt: 10,14
 --- !u!4 &743238148
 Transform:
   m_ObjectHideFlags: 0

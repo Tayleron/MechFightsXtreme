@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Apalis
   m_EditorClassIdentifier: 
   mechName: Apalis
+  MechPrefab: {fileID: 1364589977321790, guid: 13be93799dc57b0409ce2c4ff680fc8e, type: 2}
   hpArm: 13
   hpArmMax: 13
   hpLeg: 13
@@ -29,4 +30,4 @@ MonoBehaviour:
   armorLeg: 2
   armorArm: 2
   shieldPoints: 0
-  mechPrefab: {fileID: 0}
+  weight: 0

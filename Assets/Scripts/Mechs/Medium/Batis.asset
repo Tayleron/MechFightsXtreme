@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Batis
   m_EditorClassIdentifier: 
   mechName: Batis
+  MechPrefab: {fileID: 1601956781206476, guid: a2f640c08e3b32147947648cdd31e649, type: 2}
   hpArm: 9
   hpArmMax: 9
   hpLeg: 9
@@ -29,4 +30,4 @@ MonoBehaviour:
   armorLeg: 1
   armorArm: 1
   shieldPoints: 0
-  mechPrefab: {fileID: 0}
+  weight: 0

@@ -27,8 +27,7 @@ public class GridManager : MonoBehaviour
   public bool LabelsOnOff = true;
   //Used by dictionary to store Hex Coords as a string
   private string hexCoords;
-  //input a string format "x,y" to spawn unit at that location
-  public string CoordsToSpawnAt = "2,2";
+  
 
 
   //Dictionary of all hexes, added to by createGrid()
@@ -110,17 +109,23 @@ public class GridManager : MonoBehaviour
     }
   }
   //temp prefab holder to test spawner
-  public GameObject mechPrefab;
-  public Transform hexTran;
+  public GameObject mechPrefabToSpawn;
+  //req for spawner to get Hex Transform/Location
+  protected Transform hexTran;
+  //input a string format "x,y" to spawn unit at that location
+  public string CoordsToSpawnAt;
 
-  void spawnUnitAt(GameObject mechPrefab, string location)
+  void spawnUnitAt(GameObject mechPrefabToSpawn, string location)
   {
     GameObject myHex = hexValues[location];
     hexTran = myHex.transform;
-    Instantiate(mechPrefab, myHex.transform.position, Quaternion.identity, myHex.transform);
+    Instantiate(mechPrefabToSpawn, myHex.transform.position, Quaternion.identity, myHex.transform);
+
+    //TODO: The plan with this method is to be able to pass which mech you want and it will choose the 
+    //correct prefab and stats to spawn. You will also indicate the location to spawn at, and pass that
+    //to this method.
   }
   
-
   //Adding persistence
   void Awake () {
     if (control == null) {
@@ -135,7 +140,7 @@ public class GridManager : MonoBehaviour
 	{
 		setSizes();
 		createGrid();
-    spawnUnitAt(mechPrefab, CoordsToSpawnAt);
+    spawnUnitAt(mechPrefabToSpawn, CoordsToSpawnAt);
 
 	}
 

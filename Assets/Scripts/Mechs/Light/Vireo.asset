@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Vireo
   m_EditorClassIdentifier: 
   mechName: Vireo
+  MechPrefab: {fileID: 1706490245696108, guid: d040cf2021e3b2140be4f242b8e71210, type: 2}
   hpArm: 6
   hpArmMax: 6
   hpLeg: 6
@@ -29,3 +30,4 @@ MonoBehaviour:
   armorLeg: 0
   armorArm: 0
   shieldPoints: 0
+  weight: 0

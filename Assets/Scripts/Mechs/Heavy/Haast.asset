@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Haast
   m_EditorClassIdentifier: 
   mechName: Haast
+  MechPrefab: {fileID: 1551848620446938, guid: cfd99c7596eedfd4a90d5c77f37bd6b5, type: 2}
   hpArm: 14
   hpArmMax: 14
   hpLeg: 14
@@ -29,4 +30,4 @@ MonoBehaviour:
   armorLeg: 3
   armorArm: 3
   shieldPoints: 0
-  mechPrefab: {fileID: 0}
+  weight: 0

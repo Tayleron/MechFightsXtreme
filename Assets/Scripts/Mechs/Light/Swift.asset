@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Swift
   m_EditorClassIdentifier: 
   mechName: Swift
+  MechPrefab: {fileID: 1539270316518744, guid: 8b8e468cd846cfc4b870c5c4b78acab8, type: 2}
   hpArm: 7
   hpArmMax: 7
   hpLeg: 7
@@ -29,4 +30,4 @@ MonoBehaviour:
   armorLeg: 0
   armorArm: 0
   shieldPoints: 0
-  mechPrefab: {fileID: 0}
+  weight: 0

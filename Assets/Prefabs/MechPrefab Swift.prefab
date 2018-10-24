@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 65650166463403400}
   - component: {fileID: 114181997369788674}
   m_Layer: 0
-  m_Name: MechPrefab Blue
+  m_Name: MechPrefab Swift
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,4 +108,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f17fd9245ddbbe4c910d812c300976e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mech: {fileID: 0}
+  mech: {fileID: 11400000, guid: 3b0d723f9c549bf4794383710c6d5c9a, type: 2}
+  currentHex: {fileID: 0}

@@ -6,14 +6,18 @@ public class MechStats : MonoBehaviour {
 
 	public Mech mech;
 	public GameObject currentHex;
+	public Renderer rend;
+
+	public float modelHeight;
 
 	private int x;
 	private int y;
+	private float yHeight;
 	
 	// Use this for initialization
-	void Start () {
-		
-		setCurrentHex();
+	void Start () {		
+		modelHeight = mech.MechPrefab.GetComponent<Renderer>().bounds.size.y;
+    transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z + (modelHeight/ 1.5f));
 	
     Debug.Log("My name is: " + mech.mechName +
 		" and my movement speed is: " + mech.movementSpeedInHexes + ". I have: "
@@ -21,14 +25,16 @@ public class MechStats : MonoBehaviour {
 	}
 
 	void setCurrentHex() 
-	{
+	{ 
+		//get current hex and assign x and y values 
     currentHex = transform.parent.gameObject;
     x = currentHex.GetComponent<Hex>().x;
     y = currentHex.GetComponent<Hex>().y;
+		yHeight = currentHex.GetComponent<Hex>().HexModelYHeight;
   }
 
 	void Update() {
-			
+    setCurrentHex();
 	}
 
 

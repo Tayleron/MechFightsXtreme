@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 65566803929122122}
   - component: {fileID: 114834339168721662}
   m_Layer: 0
-  m_Name: MechPrefab Red
+  m_Name: MechPrefab Apalis
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,4 +108,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f17fd9245ddbbe4c910d812c300976e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mech: {fileID: 0}
+  mech: {fileID: 11400000, guid: ffed1321f68b5e341ac3a5351f17f334, type: 2}
+  currentHex: {fileID: 0}

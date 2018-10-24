@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Shrike
   m_EditorClassIdentifier: 
   mechName: Shrike
+  MechPrefab: {fileID: 1706490245696108, guid: a6009b48c3461af4db93c4619ac45852, type: 2}
   hpArm: 7
   hpArmMax: 7
   hpLeg: 7
@@ -29,4 +30,4 @@ MonoBehaviour:
   armorLeg: 1
   armorArm: 1
   shieldPoints: 0
-  mechPrefab: {fileID: 0}
+  weight: 0

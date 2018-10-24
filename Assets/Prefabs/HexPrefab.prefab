@@ -88,7 +88,7 @@ Transform:
   m_GameObject: {fileID: 1711373742880880}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: -0.7071068}
   m_LocalPosition: {x: 3.2429516, y: 4.94817, z: -3.6094537}
-  m_LocalScale: {x: 1, y: 1, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4506684080507980}
   - {fileID: 4981468486626134}
@@ -329,6 +329,11 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 28d0a3083aa947343b89eb9b44e46ac5, type: 2}
   - {fileID: 2100000, guid: 19d0ce10e346e5543b0d0737e5bb08f1, type: 2}
   - {fileID: 2100000, guid: 9b4beeaa8a2dbe54caba19f9cefdbed8, type: 2}
+  HexMeshes:
+  - {fileID: 4300000, guid: eaf664885a1de174f9b7c046cb97ecd4, type: 3}
+  - {fileID: 4300000, guid: 14188c269bc582b438378c4757456c46, type: 3}
+  - {fileID: 4300000, guid: ae5d417088e86a74b9a7b4a3e209ff6a, type: 3}
+  - {fileID: 4300000, guid: ae554d01a7468ab44b25b8cb3581262c, type: 3}
   ramp: {fileID: 1236398792359250}
   grid: {fileID: 0}
   x: 0

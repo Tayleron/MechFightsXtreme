@@ -13,7 +13,7 @@ public class Hex : MonoBehaviour {
   public int x;
   public int y;
 
-  private float HexModelYHeight;
+  public float HexModelYHeight;
 
 	//Elevation determines the height of the hex 
 	//Use Elevation to determine cliffs and the color/graphics hexes should be assigned

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Crake
   m_EditorClassIdentifier: 
   mechName: Crake
+  MechPrefab: {fileID: 1601956781206476, guid: c97bb33ae6973764285f167e0ffce675, type: 2}
   hpArm: 12
   hpArmMax: 12
   hpLeg: 12
@@ -29,4 +30,4 @@ MonoBehaviour:
   armorLeg: 2
   armorArm: 2
   shieldPoints: 0
-  mechPrefab: {fileID: 0}
+  weight: 0

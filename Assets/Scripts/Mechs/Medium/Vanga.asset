@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Vanga
   m_EditorClassIdentifier: 
   mechName: Vanga
+  MechPrefab: {fileID: 1706490245696108, guid: f4067998f5eff944eb3150c7693a4271, type: 2}
   hpArm: 11
   hpArmMax: 11
   hpLeg: 11
@@ -29,4 +30,4 @@ MonoBehaviour:
   armorLeg: 2
   armorArm: 2
   shieldPoints: 12
-  mechPrefab: {fileID: 0}
+  weight: 0
