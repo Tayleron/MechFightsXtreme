@@ -24,7 +24,8 @@ public class Mech : ScriptableObject {
   public int tpMax;
   public int tpCurrent;
 
-  public int movementSpeedInHexes;
+  public int movementMax;
+  public int movementRemaining;
   public int movementCostPerHex;
   
   public int armorHead;

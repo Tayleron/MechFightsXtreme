@@ -141,7 +141,7 @@ public class GridManager : MonoBehaviour
 		setSizes();
 		createGrid();
     spawnUnitAt(mechPrefabToSpawn, CoordsToSpawnAt);
-
+    spawnUnitAt(mechPrefabToSpawn, CoordsToSpawnAt);
 	}
 
   //GUI buttons to allow for changes

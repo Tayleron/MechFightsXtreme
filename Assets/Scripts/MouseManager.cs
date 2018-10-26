@@ -11,9 +11,9 @@ public class MouseManager : MonoBehaviour {
 	//req for camera drag controls
 	bool isDraggingCamera = false;
 	Vector3 LastMousePosition;
+  Vector3 cameraTargetOffset;
 	//zoom levels
-  public float cameraMinHeight = 10f;
-  public float cameraMaxHeight = 50f;
+
 	
 	void Start() {
 			
@@ -67,49 +67,89 @@ public class MouseManager : MonoBehaviour {
       else if (ourHitObject.GetComponent<MechStats>() != null)
       {
         MouseOver_Mech(ourHitObject);
+        takeDamage(ourHitObject);
       }
     }
-
+		
 		//add scroll wheel zoom
 		float scrollAmount = -Input.GetAxis("Mouse ScrollWheel");
-		if(Mathf.Abs(scrollAmount) > 0.01f) {
-			Vector3 dir = Camera.main.transform.position - hitPos;
-			Camera.main.transform.Translate(dir * scrollAmount, Space.World);
-      Vector3 p = Camera.main.transform.position;
+  	float cameraMinHeight = 10f;
+  	float cameraMaxHeight = 60f;
+		
+    Vector3 dir = Camera.main.transform.position - hitPos;
+    Vector3 p = Camera.main.transform.position;
 
-			//set limits to the zoom in/out
-			if (p.y < cameraMinHeight)
-			{
-				p.y = cameraMinHeight;
-			}
-			if (p.y > cameraMaxHeight)
-			{
-				p.y = cameraMaxHeight;
-			}
-			Camera.main.transform.position = p;
-
-			//TODO: Add a method to prevent scrolling at a certain point (high and low points)
-			//so that it doesn't keep trying to scroll at the max and min points. 
+		if (scrollAmount > 0 || p.y > cameraMinHeight)
+		{
+      cameraTargetOffset += dir * scrollAmount;
 		}
+		
+		Vector3 lastCameraPosition = Camera.main.transform.position;
+		Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, Camera.main.transform.position + cameraTargetOffset, Time.deltaTime * 5f);
+		cameraTargetOffset -= Camera.main.transform.position - lastCameraPosition;
+		
+		p = Camera.main.transform.position;
+    //set limits to the zoom in/out
+    if (p.y < cameraMinHeight) {
+				p.y = cameraMinHeight;
+		}
+		if (p.y > cameraMaxHeight) {
+				p.y = cameraMaxHeight;
+		}
+		//set camera position to new zoomed position
+		Camera.main.transform.position = p;
+		
 	}
 	
 	//Click on Hex
   void MouseOver_Hex(GameObject ourHitObject) 
 	{
-
-		if (Input.GetMouseButtonDown(0)) 
+		if (Input.GetButtonDown("Fire1")) 
 		{
+			//select the Hex you click on
 			selectedHex = ourHitObject.GetComponentInChildren<Hex>();
-      Debug.Log(selectedHex.name);
+      // Debug.Log(selectedHex.name);
+			//move the selected mech
+			if (selectedMech != null && selectedMech.mech.movementRemaining >= selectedMech.mech.movementCostPerHex)
+			{
+				//change the parent of the selected mech to the newly clicked hex
+				selectedMech.transform.parent = selectedHex.transform;
+				//move the mech to the new hex via the mech's own method
+				selectedMech.moveUnit();
+				//deselect the mech
+				selectedMech = null;
+			}
     }
   }
 	//Click on Mech
-	void MouseOver_Mech(GameObject ourHitObject) {
-		if(Input.GetMouseButtonDown(0)) {
+	void MouseOver_Mech(GameObject ourHitObject) 
+	{
+		if (Input.GetButtonDown("Fire1")) 
+		{
+			//select the mech you click on
 			selectedMech = ourHitObject.GetComponent<MechStats>();
-			Debug.Log(selectedMech.name);
+			Debug.Log(selectedMech.mech.name + " Selected. " + selectedMech.mech.hpTorso + " Torso HP remaining." );
 		}
 	}
+	//simple damage test to hurt the mech when "fire2" (right click) is pressed
+	void takeDamage(GameObject ourHitObject)
+	{
+		if (Input.GetButtonDown("Fire2") && selectedMech != null)
+		{
+			//damage the torso HP
+      selectedMech.mech.hpTorso -= 2;
+      Debug.Log(selectedMech.mech.name + " damaged " + selectedMech.mech.hpTorso + " remaining.");
+      //check to see if mech is destroyed
+			if (selectedMech.mech.hpTorso <= 0)
+      {
+        Debug.Log(selectedMech.mech.name + " destroyed. " + "Health restored to max.");
+				//restore to max HP
+				selectedMech.mech.hpTorso = selectedMech.mech.hpTorsoMax;
+				//deselect mech
+				selectedMech = null;
+      }
+		}
+	}	
 }
 
 		

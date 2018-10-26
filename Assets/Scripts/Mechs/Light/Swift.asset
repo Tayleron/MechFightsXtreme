@@ -23,7 +23,8 @@ MonoBehaviour:
   hpHeadMax: 5
   tpMax: 20
   tpCurrent: 20
-  movementSpeedInHexes: 12
+  movementMax: 12
+  movementRemaining: 12
   movementCostPerHex: 1
   armorHead: 0
   armorTorso: 2
