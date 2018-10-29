@@ -27,6 +27,8 @@ public class MechStats : MonoBehaviour {
 		
 		//get the full height of the model
 		modelHeight = mech.MechPrefab.GetComponent<Renderer>().bounds.size.y;
+    moveUnit();
+    setCurrentHex();
 
     Debug.Log("My name is: " + mech.mechName +
 		" and I have: " + mech.movementRemaining + " movement remaining. I have: "
@@ -50,8 +52,10 @@ public class MechStats : MonoBehaviour {
 	
 
 	void Update() {
-
+		//Allows the Mech to always know what Hex it's located at.
+		//Is this important? does it need to be constant? can it be called only when needed?
     setCurrentHex();
+    
 
   }
 

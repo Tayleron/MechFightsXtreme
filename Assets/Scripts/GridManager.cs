@@ -108,13 +108,13 @@ public class GridManager : MonoBehaviour
       }
     }
   }
-  //temp prefab holder to test spawner
+  //temp prefab holder to test spawner, set in inspector
   public GameObject mechPrefabToSpawn;
   //req for spawner to get Hex Transform/Location
   protected Transform hexTran;
-  //input a string format "x,y" to spawn unit at that location
+  //input a string in the inspector, format "x,y" to spawn unit at that location
   public string CoordsToSpawnAt;
-
+  //Unit Spawning method
   void spawnUnitAt(GameObject mechPrefabToSpawn, string location)
   {
     GameObject myHex = hexValues[location];
@@ -122,7 +122,7 @@ public class GridManager : MonoBehaviour
     Instantiate(mechPrefabToSpawn, myHex.transform.position, Quaternion.identity, myHex.transform);
 
     //TODO: The plan with this method is to be able to pass which mech you want and it will choose the 
-    //correct prefab and stats to spawn. You will also indicate the location to spawn at, and pass that
+    //correct prefab to spawn. You will also indicate the location to spawn at, and pass that
     //to this method.
   }
   
