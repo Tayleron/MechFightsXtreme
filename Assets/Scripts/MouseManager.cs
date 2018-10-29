@@ -67,7 +67,7 @@ public class MouseManager : MonoBehaviour {
       else if (ourHitObject.GetComponent<MechStats>() != null)
       {
         MouseOver_Mech(ourHitObject);
-        takeDamage(ourHitObject);
+        MouseOver_tempTakeDmg();
       }
     }
 		
@@ -131,95 +131,39 @@ public class MouseManager : MonoBehaviour {
 			Debug.Log(selectedMech.mech.name + " Selected. " + selectedMech.mech.hpTorso + " Torso HP remaining." );
 		}
 	}
-	//this will be changed depending on the weapon used and each weapon will 
-	//probably have some sort of damage get'er method within itself
-	public int dmgToTake = 2;
-	//req to randomize hit locations
-	public float randHit;
-	//req to set hit location
-  string hitLoc;
-	//figure out what location was randomly hit
-	//maybe I could conbine this with the damaging if method? Far future thing.
-  public void DetermineHitLoc(float randHit)
-  {
-    if (randHit > 0.9f && selectedMech.mech.hpHead > 0) {
-      hitLoc = "Head";
-    }	else if (randHit > 0.6f && selectedMech.mech.hpTorso > 0) {
-      hitLoc = "Torso";
-    } else if (randHit > 0.4f && selectedMech.mech.hpArm > 0)	{
-      hitLoc = "Arm";
-    } else if (randHit > 0.2f && selectedMech.mech.hpLeg > 0)	{
-      hitLoc = "Leg";
-    } else {
-      hitLoc = "miss";
-    }
-  }
-  
-	//simple damage test to hurt the mech when "fire2" (right click) is pressed
-	void takeDamage(GameObject ourHitObject)
+	//temp method to test damage script
+	void MouseOver_tempTakeDmg()
 	{
-		if (Input.GetButtonDown("Fire2") && selectedMech != null)
+		if(Input.GetButtonDown("Fire2") && selectedMech != null)
 		{
-      //location to damage
-      randHit = Random.value;
-			DetermineHitLoc(randHit);
-      //deal the damage to the proper location
-			if (hitLoc == "Head") {
-        selectedMech.mech.hpHead -= dmgToTake;
-      } else if (hitLoc == "Torso") {
-        selectedMech.mech.hpTorso -= dmgToTake;
-      } else if (hitLoc == "Arm") {
-        if (selectedMech.mech.hpArm > 0) {
-          selectedMech.mech.hpArm -= dmgToTake;
-        } else {
-          hitLoc = "Torso";
-          selectedMech.mech.hpTorso -= dmgToTake;
-        }
-      } else if (hitLoc == "Leg") {
-        if (selectedMech.mech.hpLeg > 0) {
-          selectedMech.mech.hpLeg -= dmgToTake;
-        } else {
-          hitLoc = "Torso";
-          selectedMech.mech.hpTorso -= dmgToTake;
-        }
-      } else if (hitLoc == "miss") {
-        hitLoc = "not";
-      }
-
-      Debug.Log(selectedMech.mech.name + " " + hitLoc + " damaged.");
-			Debug.Log(selectedMech.mech.hpHead + " head HP remaining.");
-			Debug.Log(selectedMech.mech.hpTorso + " torso HP remaining.");
-			Debug.Log(selectedMech.mech.hpArm + " arm HP remaining.");
-			Debug.Log(selectedMech.mech.hpLeg + " leg HP remaining.");
-
-			//check to see if the mech has been disarmed
-      if (selectedMech.mech.hpArm <= 0)
+			selectedMech.takeDamage();
+			if (selectedMech.mech.hpTorso <= 0 || selectedMech.mech.hpHead <= 0)
 			{
-				Debug.Log(selectedMech.mech.name + " arm destroyed. TP cost to fire weapons increased.");
-				//TODO: increase TP cost logic
-			}
-
-			//check to see if the mech is legged
-			if (selectedMech.mech.hpLeg <= 0)
-			{
-				Debug.Log(selectedMech.mech.name + " leg destroyed. Movement speed reduced.");
-				//TODO: reduce movement logic
-			}
-
-      //check to see if mech is destroyed
-      if (selectedMech.mech.hpTorso <= 0 || selectedMech.mech.hpHead <= 0)
-      { //TODO: mech destruction logic
-        Debug.Log(selectedMech.mech.name + " destroyed. " + "Health restored to max.");
-				//restore to max HP
-				selectedMech.mech.hpTorso = selectedMech.mech.hpTorsoMax;
-				selectedMech.mech.hpHead = selectedMech.mech.hpHeadMax;
-				selectedMech.mech.hpArm = selectedMech.mech.hpArmMax;
-				selectedMech.mech.hpLeg = selectedMech.mech.hpLegMax;
-				//deselect mech
 				selectedMech = null;
-			}	
+			}
 		}
 	}	
+
+	//temp GUI element to show mech as selected
+  void OnGUI()
+  {
+    if (selectedMech != null)
+		{
+			GUI.Label(new Rect(10, 20, 100, 40), "Mech Selected: " + selectedMech.mech.name);
+			GUI.Label(new Rect(10, 55, 100, 25), selectedMech.mech.hpHead + " head HP");			
+			GUI.Label(new Rect(10, 70, 100, 25), selectedMech.mech.hpTorso + " Torso HP");			
+			GUI.Label(new Rect(10, 85, 100, 25), selectedMech.mech.hpArm + " Arm HP");
+			GUI.Label(new Rect(10, 100, 100, 25), selectedMech.mech.hpLeg + " Leg HP");
+			if(GUI.Button(new Rect(10, 130, 100, 25), "Reset Health")) 
+			{
+				selectedMech.repairAll();
+			}
+    }
+		if (selectedHex != null)
+		{
+    	GUI.Label(new Rect(10, 0, 100, 20), selectedHex.name + " selected");
+  	}
+  }
 }
 
 		

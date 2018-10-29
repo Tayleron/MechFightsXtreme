@@ -140,8 +140,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db5ebf00e557c5644a3c6a11ee9eff59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dmgToTake: 2
-  randHit: 0
 --- !u!4 &79609300
 Transform:
   m_ObjectHideFlags: 0
@@ -321,7 +319,6 @@ GameObject:
   m_Component:
   - component: {fileID: 743238148}
   - component: {fileID: 743238147}
-  - component: {fileID: 743238149}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -363,18 +360,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &743238149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 743238146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e05531ad79e2ed142b0cfe7bc5fdd422, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitLoc: 
 --- !u!1 &941379148
 GameObject:
   m_ObjectHideFlags: 0
