@@ -344,9 +344,21 @@ MonoBehaviour:
   RandomOnOff: 1
   waterPercent: 0.25
   LabelsOnOff: 1
-  mechPrefabToSpawn: {fileID: 1706490245696108, guid: 86984554b5e96744fb81de8025993e94,
-    type: 2}
-  CoordsToSpawnAt: 10,14
+  Vireo: {fileID: 1706490245696108, guid: d040cf2021e3b2140be4f242b8e71210, type: 2}
+  Shrike: {fileID: 1706490245696108, guid: a6009b48c3461af4db93c4619ac45852, type: 2}
+  Swift: {fileID: 1539270316518744, guid: 8b8e468cd846cfc4b870c5c4b78acab8, type: 2}
+  Petrel: {fileID: 1706490245696108, guid: 86984554b5e96744fb81de8025993e94, type: 2}
+  Batis: {fileID: 1601956781206476, guid: a2f640c08e3b32147947648cdd31e649, type: 2}
+  Kestrel: {fileID: 1706490245696108, guid: b367edbf14dce394ab63210034db5c2c, type: 2}
+  Korhaan: {fileID: 1706490245696108, guid: 85a9424ad4a4e834faaf812c9db311d0, type: 2}
+  Vanga: {fileID: 1706490245696108, guid: f4067998f5eff944eb3150c7693a4271, type: 2}
+  Crake: {fileID: 1601956781206476, guid: c97bb33ae6973764285f167e0ffce675, type: 2}
+  Jakamar: {fileID: 1706490245696108, guid: ac7d6241c56f1c54392382f3babe63c1, type: 2}
+  Apalis: {fileID: 1364589977321790, guid: 13be93799dc57b0409ce2c4ff680fc8e, type: 2}
+  Haast: {fileID: 1551848620446938, guid: cfd99c7596eedfd4a90d5c77f37bd6b5, type: 2}
+  mechPrefabToSpawn: {fileID: 0}
+  CoordsToSpawnAt: 
+  mechToSpawn: 
 --- !u!4 &743238148
 Transform:
   m_ObjectHideFlags: 0

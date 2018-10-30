@@ -27,6 +27,21 @@ public class GridManager : MonoBehaviour
   public bool LabelsOnOff = true;
   //Used by dictionary to store Hex Coords as a string
   private string hexCoords;
+
+  //References to MechPrefabs
+  public GameObject Vireo;
+  public GameObject Shrike;
+  public GameObject Swift;
+  public GameObject Petrel;
+  public GameObject Batis;
+  public GameObject Kestrel;
+  public GameObject Korhaan;
+  public GameObject Vanga;
+  public GameObject Crake;
+  public GameObject Jakamar;
+  public GameObject Apalis;
+  public GameObject Haast;
+
   
 
 
@@ -108,15 +123,71 @@ public class GridManager : MonoBehaviour
       }
     }
   }
-  //temp prefab holder to test spawner, set in inspector
-  public GameObject mechPrefabToSpawn;
+  
+  //req for spawner to set prefab to spawn
+  private GameObject mechPrefabToSpawn;
   //req for spawner to get Hex Transform/Location
   protected Transform hexTran;
-  //input a string in the inspector, format "x,y" to spawn unit at that location
-  public string CoordsToSpawnAt;
-  //Unit Spawning method
-  void spawnUnitAt(GameObject mechPrefabToSpawn, string location)
+  //x,y location and name of mech to spawn
+  private string CoordsToSpawnAt;
+  private string mechToSpawn;
+  //method containing If statements to figure out which mech should be spawned
+  public void determineMech(string mechToSpawn)
   {
+    if (mechToSpawn == "Vireo")
+    {
+      mechPrefabToSpawn = Vireo;
+    }
+    else if (mechToSpawn == "Shrike")
+    {
+      mechPrefabToSpawn = Shrike;
+    }
+    else if (mechToSpawn == "Swift")
+    {
+      mechPrefabToSpawn = Swift;
+    }
+    else if (mechToSpawn == "Petrel")
+    {
+      mechPrefabToSpawn = Petrel;
+    }
+    else if (mechToSpawn == "Batis")
+    {
+      mechPrefabToSpawn = Batis;
+    }
+    else if (mechToSpawn == "Kestrel")
+    {
+      mechPrefabToSpawn = Kestrel;
+    }
+    else if (mechToSpawn == "Korhaan")
+    {
+      mechPrefabToSpawn = Korhaan;
+    }
+    else if (mechToSpawn == "Vanga")
+    {
+      mechPrefabToSpawn = Vanga;
+    }
+    else if (mechToSpawn == "Crake")
+    {
+      mechPrefabToSpawn = Crake;
+    }
+    else if (mechToSpawn == "Jakamar")
+    {
+      mechPrefabToSpawn = Jakamar;
+    }
+    else if (mechToSpawn == "Apalis")
+    {
+      mechPrefabToSpawn = Apalis;
+    }
+    else if (mechToSpawn == "Haast")
+    {
+      mechPrefabToSpawn = Haast;
+    }
+  }
+  //Unit Spawning method
+  void spawnUnitAt(string mechToSpawn, string location)
+  {
+    determineMech(mechToSpawn);
+
     GameObject myHex = hexValues[location];
     hexTran = myHex.transform;
     Instantiate(mechPrefabToSpawn, myHex.transform.position, Quaternion.identity, myHex.transform);
@@ -140,8 +211,10 @@ public class GridManager : MonoBehaviour
 	{
 		setSizes();
 		createGrid();
-    spawnUnitAt(mechPrefabToSpawn, CoordsToSpawnAt);
-    spawnUnitAt(mechPrefabToSpawn, CoordsToSpawnAt);
+    spawnUnitAt("Vireo", "10,14");
+    spawnUnitAt("Haast", "8,14");
+    spawnUnitAt("Jakamar", "12,16");
+    spawnUnitAt("Kestrel", "6,16");
 	}
 
   //GUI buttons to allow for changes

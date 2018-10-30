@@ -9,6 +9,8 @@ public class MechStats : MonoBehaviour {
 	public GameObject currentHex;
 	public Renderer rend;
 
+	public Weapon weapon;
+
 	
 	public float modelHeight;
 	private string OGName;
@@ -107,8 +109,8 @@ public class MechStats : MonoBehaviour {
     {
       hitLoc = "not";
       misses = 0;
-    }
-    else
+    }    
+		else
     {
       if (hitLoc == "Head")
       {
@@ -194,9 +196,10 @@ public class MechStats : MonoBehaviour {
     }
     //check to see if mech is destroyed
     if (mech.hpTorso <= 0 || mech.hpHead <= 0)
-    { //TODO: mech destruction logic
+    {
 			Debug.Log(mech.name + " destroyed.");
-      repairAll();
+			//Destroy the mech/gameObject
+			Destroy(gameObject);
     }  
   }
 	//method to repair all damage from a mech
@@ -208,10 +211,6 @@ public class MechStats : MonoBehaviour {
     mech.hpArm = mech.hpArmMax;
     mech.hpLeg = mech.hpLegMax;
 	}
-
-  
-
-	
 
 	void Update() {
 		//Allows the Mech to always know what Hex it's located at.
