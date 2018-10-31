@@ -140,6 +140,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db5ebf00e557c5644a3c6a11ee9eff59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedMech: {fileID: 0}
+  selectedWeapon: {fileID: 0}
 --- !u!4 &79609300
 Transform:
   m_ObjectHideFlags: 0
@@ -356,9 +358,14 @@ MonoBehaviour:
   Jakamar: {fileID: 1706490245696108, guid: ac7d6241c56f1c54392382f3babe63c1, type: 2}
   Apalis: {fileID: 1364589977321790, guid: 13be93799dc57b0409ce2c4ff680fc8e, type: 2}
   Haast: {fileID: 1551848620446938, guid: cfd99c7596eedfd4a90d5c77f37bd6b5, type: 2}
-  mechPrefabToSpawn: {fileID: 0}
-  CoordsToSpawnAt: 
-  mechToSpawn: 
+  Autocannon: {fileID: 1880423651375020, guid: b96d0c985a50f6947ad16d94c4958181, type: 2}
+  EnergyBlade: {fileID: 1267391265603364, guid: 9caf3e132ab984d47b603d16fcbe2bf0,
+    type: 2}
+  Flamer: {fileID: 1015273250079136, guid: 7b9e7aa874a16f34b887b6ebcbcd1497, type: 2}
+  GaussRifle: {fileID: 1663095820649082, guid: 508def77bc7cb0d41b4f0a30395d9273, type: 2}
+  Laser: {fileID: 1252489987710878, guid: 8310db04d2b2a5549b8ea24cfe7814b0, type: 2}
+  Railgun: {fileID: 1222535978700680, guid: a19c2f50364389c4d9b82fcf1dec1207, type: 2}
+  Rockets: {fileID: 1868005080023192, guid: 52e4980ecd20ec949a8ccee362df05ea, type: 2}
 --- !u!4 &743238148
 Transform:
   m_ObjectHideFlags: 0

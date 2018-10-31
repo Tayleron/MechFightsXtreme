@@ -110,3 +110,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mech: {fileID: 11400000, guid: 5c66532ce314eb544b0befd80a71ba94, type: 2}
   currentHex: {fileID: 0}
+  rend: {fileID: 0}
+  weapon: {fileID: 0}
+  modelHeight: 0

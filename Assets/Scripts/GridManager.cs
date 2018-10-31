@@ -42,8 +42,14 @@ public class GridManager : MonoBehaviour
   public GameObject Apalis;
   public GameObject Haast;
 
-  
-
+  //References to WeaponPrefabs
+  public GameObject Autocannon;
+  public GameObject EnergyBlade;
+  public GameObject Flamer;
+  public GameObject GaussRifle;
+  public GameObject Laser;
+  public GameObject Railgun;
+  public GameObject Rockets;
 
   //Dictionary of all hexes, added to by createGrid()
   Dictionary<string, GameObject> hexValues = new Dictionary<string, GameObject>();
@@ -123,11 +129,11 @@ public class GridManager : MonoBehaviour
       }
     }
   }
-  
+
   //req for spawner to set prefab to spawn
   private GameObject mechPrefabToSpawn;
   //req for spawner to get Hex Transform/Location
-  protected Transform hexTran;
+  private Transform hexTran;
   //x,y location and name of mech to spawn
   private string CoordsToSpawnAt;
   private string mechToSpawn;
@@ -190,11 +196,8 @@ public class GridManager : MonoBehaviour
 
     GameObject myHex = hexValues[location];
     hexTran = myHex.transform;
-    Instantiate(mechPrefabToSpawn, myHex.transform.position, Quaternion.identity, myHex.transform);
+    Instantiate(mechPrefabToSpawn, myHex.transform.position, Quaternion.identity, hexTran);
 
-    //TODO: The plan with this method is to be able to pass which mech you want and it will choose the 
-    //correct prefab to spawn. You will also indicate the location to spawn at, and pass that
-    //to this method.
   }
   
   //Adding persistence
@@ -211,7 +214,7 @@ public class GridManager : MonoBehaviour
 	{
 		setSizes();
 		createGrid();
-    spawnUnitAt("Vireo", "10,14");
+    spawnUnitAt("Petrel", "10,14");
     spawnUnitAt("Haast", "8,14");
     spawnUnitAt("Jakamar", "12,16");
     spawnUnitAt("Kestrel", "6,16");

@@ -9,46 +9,46 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1706490245696108}
+  m_RootGameObject: {fileID: 1601956781206476}
   m_IsPrefabAsset: 1
---- !u!1 &1706490245696108
+--- !u!1 &1601956781206476
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4437264833984592}
-  - component: {fileID: 33493297879947618}
-  - component: {fileID: 23893098574301410}
-  - component: {fileID: 65341579366892238}
-  - component: {fileID: 114828495751120108}
+  - component: {fileID: 4071168003575856}
+  - component: {fileID: 33485057452222692}
+  - component: {fileID: 23268339637918262}
+  - component: {fileID: 65006091863778764}
+  - component: {fileID: 114171984360232708}
   m_Layer: 0
-  m_Name: MechPrefab Shrike
+  m_Name: MechPrefab Crake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4437264833984592
+--- !u!4 &4071168003575856
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1706490245696108}
+  m_GameObject: {fileID: 1601956781206476}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.511753, y: -3.0022702, z: -0.26554537}
+  m_LocalPosition: {x: -0.17, y: -1.6159687, z: -1.13}
   m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23893098574301410
+--- !u!23 &23268339637918262
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1706490245696108}
+  m_GameObject: {fileID: 1601956781206476}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -58,7 +58,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 3039a0b9d2be4144f9e7e5b214d0b72b, type: 2}
+  - {fileID: 2100000, guid: e7c02af4edf2e2b4bbbc1b295666329a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -78,35 +78,38 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33493297879947618
+--- !u!33 &33485057452222692
 MeshFilter:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1706490245696108}
+  m_GameObject: {fileID: 1601956781206476}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65341579366892238
+--- !u!65 &65006091863778764
 BoxCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1706490245696108}
+  m_GameObject: {fileID: 1601956781206476}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114828495751120108
+--- !u!114 &114171984360232708
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1706490245696108}
+  m_GameObject: {fileID: 1601956781206476}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f17fd9245ddbbe4c910d812c300976e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mech: {fileID: 11400000, guid: 5ae473e12573dd942a6ae259668ac8b0, type: 2}
+  mech: {fileID: 11400000, guid: 8133f6bb076191c488e0a8d6211690ea, type: 2}
   currentHex: {fileID: 0}
+  rend: {fileID: 0}
+  weapon: {fileID: 0}
+  modelHeight: 0

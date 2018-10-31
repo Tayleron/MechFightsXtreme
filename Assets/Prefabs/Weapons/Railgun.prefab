@@ -9,46 +9,46 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1364589977321790}
+  m_RootGameObject: {fileID: 1222535978700680}
   m_IsPrefabAsset: 1
---- !u!1 &1364589977321790
+--- !u!1 &1222535978700680
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4219834396705216}
-  - component: {fileID: 33911304218258700}
-  - component: {fileID: 23950245291064558}
-  - component: {fileID: 65566803929122122}
-  - component: {fileID: 114834339168721662}
+  - component: {fileID: 4581219981880952}
+  - component: {fileID: 33257477316826920}
+  - component: {fileID: 23020976091868018}
+  - component: {fileID: 136563649224721210}
+  - component: {fileID: 114257362547792840}
   m_Layer: 0
-  m_Name: MechPrefab Apalis
-  m_TagString: Player
+  m_Name: Railgun
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4219834396705216
+--- !u!4 &4581219981880952
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1364589977321790}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.721, y: 0.922, z: -4.519}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
+  m_GameObject: {fileID: 1222535978700680}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23950245291064558
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!23 &23020976091868018
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1364589977321790}
+  m_GameObject: {fileID: 1222535978700680}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -58,7 +58,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: d8f88b4fb6b07744cb2bfdeed3d6c4f6, type: 2}
+  - {fileID: 2100000, guid: 4057fca2d9939e84fa5eb8c10c23273f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -78,35 +78,37 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33911304218258700
+--- !u!33 &33257477316826920
 MeshFilter:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1364589977321790}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65566803929122122
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1364589977321790}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114834339168721662
+  m_GameObject: {fileID: 1222535978700680}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114257362547792840
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1364589977321790}
+  m_GameObject: {fileID: 1222535978700680}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f17fd9245ddbbe4c910d812c300976e, type: 3}
+  m_Script: {fileID: 11500000, guid: 9445a1880cb5aae48a4a99b646a5a1bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mech: {fileID: 11400000, guid: ffed1321f68b5e341ac3a5351f17f334, type: 2}
-  currentHex: {fileID: 0}
+  weapon: {fileID: 11400000, guid: 12b92abf955299949ba46d5ef350cd66, type: 2}
+  mech: {fileID: 0}
+  MM: {fileID: 0}
+--- !u!136 &136563649224721210
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1222535978700680}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5000001
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}

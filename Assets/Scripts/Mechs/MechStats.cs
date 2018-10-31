@@ -10,7 +10,8 @@ public class MechStats : MonoBehaviour {
 	public Renderer rend;
 
 	public Weapon weapon;
-
+	public WeaponStats equippedWeapon;
+	
 	
 	public float modelHeight;
 	private string OGName;
@@ -26,6 +27,11 @@ public class MechStats : MonoBehaviour {
     mech = Instantiate(mech);
 		//rename the clone to the orginal name
 		mech.name = OGName;
+
+		//temp instantiate a weapon to test
+		OGName = equippedWeapon.name;
+		equippedWeapon = Instantiate(equippedWeapon);
+		equippedWeapon.name = OGName;
 		
 		//get the full height of the model
 		modelHeight = mech.MechPrefab.GetComponent<Renderer>().bounds.size.y;
@@ -53,7 +59,6 @@ public class MechStats : MonoBehaviour {
 
   //this will be changed depending on the weapon used and each weapon will 
   //probably have some sort of damage get'er method within itself
-  private int dmgToTake = 4;
 	private int newDmg;
   //req to randomize hit locations
   private float randHit;
@@ -91,7 +96,7 @@ public class MechStats : MonoBehaviour {
   }
 
   //method to take damage (with hit Locations)
-  public void takeDamage()
+  public void takeDamage(int dmgToTake)
   {    
     for (int i = 0; i < missDice + 1; i++)
       {
@@ -211,6 +216,15 @@ public class MechStats : MonoBehaviour {
     mech.hpArm = mech.hpArmMax;
     mech.hpLeg = mech.hpLegMax;
 	}
+	
+	// void loadWeapons()
+	// {
+		
+	// }
+	// public void equipWeapon()
+	// {
+
+	// }
 
 	void Update() {
 		//Allows the Mech to always know what Hex it's located at.

@@ -5,8 +5,9 @@ using UnityEngine.EventSystems;
 
 public class MouseManager : MonoBehaviour {
 
-	MechStats selectedMech;
+	public MechStats selectedMech;
   Hex selectedHex;
+	public WeaponStats selectedWeapon;
 
 	//req for camera drag controls
 	bool isDraggingCamera = false;
@@ -67,7 +68,7 @@ public class MouseManager : MonoBehaviour {
       else if (ourHitObject.GetComponent<MechStats>() != null)
       {
         MouseOver_Mech(ourHitObject);
-        MouseOver_tempTakeDmg();
+        MouseOver_Attack();
       }
     }
 		
@@ -121,6 +122,7 @@ public class MouseManager : MonoBehaviour {
 			}
     }
   }
+
 	//Click on Mech
 	void MouseOver_Mech(GameObject ourHitObject) 
 	{
@@ -131,18 +133,33 @@ public class MouseManager : MonoBehaviour {
 			Debug.Log(selectedMech.mech.name + " Selected. " + selectedMech.mech.hpTorso + " Torso HP remaining." );
 		}
 	}
-	//temp method to test damage script
-	void MouseOver_tempTakeDmg()
+
+	//method to perform an attack
+	void MouseOver_Attack()
 	{
 		if(Input.GetButtonDown("Fire2") && selectedMech != null)
 		{
-			selectedMech.takeDamage();
-			if (selectedMech.mech.hpTorso <= 0 || selectedMech.mech.hpHead <= 0)
-			{
-				selectedMech = null;
-			}
+			selectedWeapon = selectedMech.equippedWeapon;
+			
+			StartCoroutine(Selection());
 		}
-	}	
+	}
+
+  IEnumerator Selection()
+  {
+		selectedMech = null;
+    Debug.Log("Select Mech To Attack");
+    yield return new WaitUntil(() => selectedMech != null);
+		if (selectedMech != null)
+		{
+      selectedWeapon.atkMech(selectedMech);
+    }
+    
+		if (selectedMech.mech.hpTorso <= 0 || selectedMech.mech.hpHead <= 0)
+    {
+      selectedMech = null;
+    }
+  }	
 
 	//temp GUI element to show mech as selected
   void OnGUI()

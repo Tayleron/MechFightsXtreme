@@ -8,6 +8,7 @@ public class Weapon : ScriptableObject {
 	public string weaponName;
 
 	public int damage;
+	public int rateOfFire;
 	public int maxRange;
 	public int minRange;
 	public int tpCost;
