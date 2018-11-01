@@ -14,13 +14,12 @@ public class WeaponStats : MonoBehaviour {
 		Debug.Log("I am a: " + weapon.weaponName + " and I do: " + weapon.damage 
 		+ " damage.");		
 	}
-
+	
+	//include the mech to be attacked as an argument
 	public void atkMech(MechStats mech)
 	{
-		//call the choosen mech
-	
 		//call the damage method and pass it the weapon's damage stat
-		mech.takeDamage(weapon.damage);
+		mech.takeDamage(weapon.damage, weapon.weaponName);
 	}
 	
 }

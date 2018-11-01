@@ -13,8 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Rockets
   damage: 12
+  rateOfFire: 1
   maxRange: 8
   minRange: 0
   tpCost: 10
   weight: 3
-  weaponPrefab: {fileID: 0}
+  weaponPrefab: {fileID: 1868005080023192, guid: 52e4980ecd20ec949a8ccee362df05ea,
+    type: 2}

@@ -13,8 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Laser
   damage: 10
+  rateOfFire: 1
   maxRange: 5
   minRange: 0
   tpCost: 5
   weight: 2
-  weaponPrefab: {fileID: 0}
+  weaponPrefab: {fileID: 1252489987710878, guid: 8310db04d2b2a5549b8ea24cfe7814b0,
+    type: 2}

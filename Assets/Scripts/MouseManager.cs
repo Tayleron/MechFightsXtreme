@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class MouseManager : MonoBehaviour {
 
 	public MechStats selectedMech;
+	public MechStats selectedMechLast;
   Hex selectedHex;
 	public WeaponStats selectedWeapon;
 
@@ -68,7 +69,7 @@ public class MouseManager : MonoBehaviour {
       else if (ourHitObject.GetComponent<MechStats>() != null)
       {
         MouseOver_Mech(ourHitObject);
-        MouseOver_Attack();
+				MouseOver_Attack();
       }
     }
 		
@@ -135,31 +136,42 @@ public class MouseManager : MonoBehaviour {
 	}
 
 	//method to perform an attack
+	void attack()
+	{
+		selectedWeapon = selectedMech.equippedWeapon;
+		for (int i = 0; i < selectedWeapon.weapon.rateOfFire; i++)
+		{
+			StartCoroutine(selection());
+	  }
+	}
+	
+	//method to attack after a simple right click instead of using the GUI Attack button
 	void MouseOver_Attack()
 	{
 		if(Input.GetButtonDown("Fire2") && selectedMech != null)
 		{
-			selectedWeapon = selectedMech.equippedWeapon;
-			
-			StartCoroutine(Selection());
+			attack();
 		}
 	}
 
-  IEnumerator Selection()
+  IEnumerator selection()
   {
+		selectedMechLast = selectedMech;
 		selectedMech = null;
     Debug.Log("Select Mech To Attack");
-    yield return new WaitUntil(() => selectedMech != null);
-		if (selectedMech != null)
+    yield return new WaitUntil(() => selectedMech != null || Input.GetKey(KeyCode.Escape));
+		//left-click to attack a mech
+		
+		if (Input.GetKey(KeyCode.Escape))
 		{
-      selectedWeapon.atkMech(selectedMech);
-    }
-    
-		if (selectedMech.mech.hpTorso <= 0 || selectedMech.mech.hpHead <= 0)
+			selectedMech = selectedMechLast;
+      yield break;
+		} else if (selectedMech != null)
     {
+      selectedWeapon.atkMech(selectedMech);
       selectedMech = null;
     }
-  }	
+  }
 
 	//temp GUI element to show mech as selected
   void OnGUI()
@@ -174,6 +186,10 @@ public class MouseManager : MonoBehaviour {
 			if(GUI.Button(new Rect(10, 130, 100, 25), "Reset Health")) 
 			{
 				selectedMech.repairAll();
+			}
+			if(GUI.Button(new Rect(10, 160, 100, 25), "Attack")) 
+			{
+				attack();
 			}
     }
 		if (selectedHex != null)

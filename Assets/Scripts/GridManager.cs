@@ -215,7 +215,7 @@ public class GridManager : MonoBehaviour
 		setSizes();
 		createGrid();
     spawnUnitAt("Petrel", "10,14");
-    spawnUnitAt("Haast", "8,14");
+    spawnUnitAt("Vanga", "8,14");
     spawnUnitAt("Jakamar", "12,16");
     spawnUnitAt("Kestrel", "6,16");
 	}

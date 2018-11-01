@@ -57,9 +57,7 @@ public class MechStats : MonoBehaviour {
     transform.localPosition = new Vector3(0, 0, modelHeight / 1.5f);
 	}
 
-  //this will be changed depending on the weapon used and each weapon will 
-  //probably have some sort of damage get'er method within itself
-	private int newDmg;
+  
   //req to randomize hit locations
   private float randHit;
   //req to set hit location
@@ -70,7 +68,7 @@ public class MechStats : MonoBehaviour {
 
   //figure out what location was randomly hit
   //maybe I could conbine this with the damaging if method? Far future thing.
-  public void DetermineHitLoc()
+  public void determineHitLoc()
   {
     randHit = Random.value;
     if (randHit > 0.9f)
@@ -95,12 +93,88 @@ public class MechStats : MonoBehaviour {
     }
   }
 
+  //this will be changed depending on the weapon used and each weapon will 
+  //probably have some sort of damage get'er method within itself
+  private int dmg;
+	private int newShld;
+  private int armor;
+  private int bonusDmg;
+  private int gaussDmg;
+	
+	public void newDmg(int dmgToTake, int armor, int shield, string weaponName)
+	{	
+		//Gauss Rifle deals double damage to shields and normal damage after that.
+		//tested: this logic works, however shields aren't working properly yet
+		if(weaponName == "Gauss Rifle")
+		{
+			gaussDmg = dmgToTake;
+			for (int i = 0; i < dmgToTake; i++)
+			{
+				shield -= 2;
+				gaussDmg -= 1;
+				if (shield <= 0)
+				{
+					break;
+				}
+			}
+      dmgToTake = gaussDmg;
+		}
+		//autocannons reduce their dmg by double the armor value
+		//tested: works as expected
+		if(weaponName == "Autocannon")
+		{
+			armor = armor*2;
+		}
+		//flamers ignore armor and instead deal double the armor value as bonus dmg
+		//tested: works as expected (might be too powerful)
+		if(weaponName == "Flamer")
+		{
+			bonusDmg = armor;
+			armor = 0;
+		}
+
+    //calc shield damage
+		newShld = shield - dmgToTake;
+    if(newShld < 0)
+    {
+      newShld = 0;
+    }
+    //set the mech's shields to new value
+    shield = newShld;
+    //calc damage after shields
+		dmgToTake = dmgToTake - newShld;
+		//calc dmg to hp
+		dmg = dmgToTake - armor + bonusDmg;
+    
+    //minimum of 0 dmg
+		if (dmg < 0)
+    {
+      dmg = 0;
+    }
+		//lasers always do 5 dmg
+		if (weaponName == "Laser" && dmg < 5)
+		{
+			dmg = 5;
+		}
+
+		Debug.Log(dmg);
+	}
+
   //method to take damage (with hit Locations)
-  public void takeDamage(int dmgToTake)
-  {    
+	//provide the damage to take as an argument
+	//which should come from the weapon's damage stat
+  public void takeDamage(int dmgToTake, string weaponName)
+  {
+		if (weaponName == "Rockets")
+		{
+			missDice -= 1;
+			if(missDice < 0) {
+				missDice = 0;
+			}
+		}
     for (int i = 0; i < missDice + 1; i++)
       {
-        DetermineHitLoc();
+        determineHitLoc();
         // Debug.Log(hitLoc);
         if (hitLoc == "miss")
         {
@@ -119,64 +193,40 @@ public class MechStats : MonoBehaviour {
     {
       if (hitLoc == "Head")
       {
-        newDmg = dmgToTake - mech.armorHead;
-        if (newDmg < 0)
-        {
-          newDmg = 0;
-        }
-        mech.hpHead -= newDmg;
+				newDmg(dmgToTake, mech.armorHead, mech.shieldPoints, weaponName);
+        mech.hpHead -= dmg;
       }
       else if (hitLoc == "Torso")
       {
-        newDmg = dmgToTake - mech.armorTorso;
-        if (newDmg < 0)
-        {
-          newDmg = 0;
-        }
-        mech.hpTorso -= newDmg;
+        newDmg(dmgToTake, mech.armorTorso, mech.shieldPoints, weaponName);
+        mech.hpTorso -= dmg;
       }
       else if (hitLoc == "Arm")
       {
         if (mech.hpArm > 0)
         {
-          newDmg = dmgToTake - mech.armorArm;
-          if (newDmg < 0)
-          {
-            newDmg = 0;
-          }
-          mech.hpArm -= newDmg;
+          newDmg(dmgToTake, mech.armorArm, mech.shieldPoints, weaponName);
+          mech.hpArm -= dmg;
         }
         else
         {
           hitLoc = "Torso";
-          newDmg = dmgToTake - mech.armorTorso;
-          if (newDmg < 0)
-          {
-            newDmg = 0;
-          }
-          mech.hpTorso -= newDmg;
+          newDmg(dmgToTake, mech.armorTorso, mech.shieldPoints, weaponName);
+          mech.hpTorso -= dmg;
         }
       }
       else if (hitLoc == "Leg")
       {
         if (mech.hpLeg > 0)
         {
-          newDmg = dmgToTake - mech.armorLeg;
-          if (newDmg < 0)
-          {
-            newDmg = 0;
-          }
-          mech.hpLeg -= newDmg;
+          newDmg(dmgToTake, mech.armorLeg, mech.shieldPoints, weaponName);
+          mech.hpLeg -= dmg;
         }
         else
         {
           hitLoc = "Torso";
-          newDmg = dmgToTake - mech.armorTorso;
-          if (newDmg < 0)
-          {
-            newDmg = 0;
-          }
-          mech.hpTorso -= newDmg;
+          newDmg(dmgToTake, mech.armorTorso, mech.shieldPoints, weaponName);
+          mech.hpTorso -= dmg;
         }
       }
     }
@@ -230,8 +280,6 @@ public class MechStats : MonoBehaviour {
 		//Allows the Mech to always know what Hex it's located at.
 		//Is this important? does it need to be constant? can it be called only when needed?
     setCurrentHex();
-    
-
   }
 
 

@@ -112,4 +112,6 @@ MonoBehaviour:
   currentHex: {fileID: 0}
   rend: {fileID: 0}
   weapon: {fileID: 0}
+  equippedWeapon: {fileID: 114055854788749252, guid: 508def77bc7cb0d41b4f0a30395d9273,
+    type: 2}
   modelHeight: 0

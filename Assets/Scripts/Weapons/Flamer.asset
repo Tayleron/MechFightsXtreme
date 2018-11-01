@@ -13,8 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Flamer
   damage: 10
+  rateOfFire: 1
   maxRange: 3
   minRange: 0
   tpCost: 5
   weight: 3
-  weaponPrefab: {fileID: 0}
+  weaponPrefab: {fileID: 1015273250079136, guid: 7b9e7aa874a16f34b887b6ebcbcd1497,
+    type: 2}

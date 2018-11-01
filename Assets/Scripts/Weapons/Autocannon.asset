@@ -13,8 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Autocannon
   damage: 8
+  rateOfFire: 2
   maxRange: 4
   minRange: 0
   tpCost: 2
   weight: 2
-  weaponPrefab: {fileID: 0}
+  weaponPrefab: {fileID: 1880423651375020, guid: b96d0c985a50f6947ad16d94c4958181,
+    type: 2}

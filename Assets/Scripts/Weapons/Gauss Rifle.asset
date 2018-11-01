@@ -13,8 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Gauss Rifle
   damage: 6
+  rateOfFire: 1
   maxRange: 6
   minRange: 0
   tpCost: 3
   weight: 1
-  weaponPrefab: {fileID: 0}
+  weaponPrefab: {fileID: 1663095820649082, guid: 508def77bc7cb0d41b4f0a30395d9273,
+    type: 2}

@@ -13,8 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Energy Blade
   damage: 15
+  rateOfFire: 1
   maxRange: 1
   minRange: 0
   tpCost: 0
   weight: 1
-  weaponPrefab: {fileID: 0}
+  weaponPrefab: {fileID: 1267391265603364, guid: 9caf3e132ab984d47b603d16fcbe2bf0,
+    type: 2}
