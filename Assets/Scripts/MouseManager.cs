@@ -183,13 +183,18 @@ public class MouseManager : MonoBehaviour {
 			GUI.Label(new Rect(10, 70, 100, 25), selectedMech.mech.hpTorso + " Torso HP");			
 			GUI.Label(new Rect(10, 85, 100, 25), selectedMech.mech.hpArm + " Arm HP");
 			GUI.Label(new Rect(10, 100, 100, 25), selectedMech.mech.hpLeg + " Leg HP");
-			if(GUI.Button(new Rect(10, 130, 100, 25), "Reset Health")) 
+			GUI.Label(new Rect(10, 115, 100, 25), selectedMech.mech.shieldPoints + " Shields");
+			if(GUI.Button(new Rect(10, 150, 100, 25), "Reset Health")) 
 			{
 				selectedMech.repairAll();
 			}
-			if(GUI.Button(new Rect(10, 160, 100, 25), "Attack")) 
+			if(GUI.Button(new Rect(10, 180, 100, 25), "Reset Shield")) 
 			{
-				attack();
+				selectedMech.repairShield();
+			}
+			if(GUI.Button(new Rect(10, 210, 100, 25), "Attack")) 
+			{
+        attack();
 			}
     }
 		if (selectedHex != null)

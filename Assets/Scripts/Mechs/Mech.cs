@@ -34,5 +34,6 @@ public class Mech : ScriptableObject {
   public int armorArm;
 
   public int shieldPoints;
+  public int shieldPointsMax;
   public int weight;
 }

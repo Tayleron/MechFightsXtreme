@@ -96,35 +96,54 @@ public class MechStats : MonoBehaviour {
   //this will be changed depending on the weapon used and each weapon will 
   //probably have some sort of damage get'er method within itself
   private int dmg;
-	private int newShld;
+	private int shld;
   private int armor;
   private int bonusDmg;
-  private int gaussDmg;
+  private int shieldDmg;
 	
 	public void newDmg(int dmgToTake, int armor, int shield, string weaponName)
 	{	
 		//Gauss Rifle deals double damage to shields and normal damage after that.
-		//tested: this logic works, however shields aren't working properly yet
+    //this If statement also encapsulates all other weapon's damage vs shields
+		//tested: this logic seems to work
 		if(weaponName == "Gauss Rifle")
 		{
-			gaussDmg = dmgToTake;
+			shieldDmg = dmgToTake;
 			for (int i = 0; i < dmgToTake; i++)
 			{
 				shield -= 2;
-				gaussDmg -= 1;
+				shieldDmg -= 1;
 				if (shield <= 0)
 				{
 					break;
 				}
 			}
-      dmgToTake = gaussDmg;
-		}
+      dmgToTake = shieldDmg;
+		} else
+    {
+      shieldDmg = dmgToTake;
+      for (int i = 0; i < dmgToTake; i++)
+      {
+        shield -= 1;
+        shieldDmg -= 1;
+        if (shield <= 0)
+        {
+          break;
+        }
+      }
+      //post shield damage stats, how much damage to deal to the actual mech
+      // and how many points of shield are left
+      dmgToTake = shieldDmg;
+      shld = shield;
+    }
+
 		//autocannons reduce their dmg by double the armor value
 		//tested: works as expected
 		if(weaponName == "Autocannon")
 		{
 			armor = armor*2;
 		}
+
 		//flamers ignore armor and instead deal double the armor value as bonus dmg
 		//tested: works as expected (might be too powerful)
 		if(weaponName == "Flamer")
@@ -133,16 +152,6 @@ public class MechStats : MonoBehaviour {
 			armor = 0;
 		}
 
-    //calc shield damage
-		newShld = shield - dmgToTake;
-    if(newShld < 0)
-    {
-      newShld = 0;
-    }
-    //set the mech's shields to new value
-    shield = newShld;
-    //calc damage after shields
-		dmgToTake = dmgToTake - newShld;
 		//calc dmg to hp
 		dmg = dmgToTake - armor + bonusDmg;
     
@@ -151,13 +160,14 @@ public class MechStats : MonoBehaviour {
     {
       dmg = 0;
     }
+
 		//lasers always do 5 dmg
 		if (weaponName == "Laser" && dmg < 5)
 		{
 			dmg = 5;
 		}
 
-		Debug.Log(dmg);
+		Debug.Log("Damage dealt: " + dmg);
 	}
 
   //method to take damage (with hit Locations)
@@ -194,11 +204,13 @@ public class MechStats : MonoBehaviour {
       if (hitLoc == "Head")
       {
 				newDmg(dmgToTake, mech.armorHead, mech.shieldPoints, weaponName);
+        mech.shieldPoints = shld;
         mech.hpHead -= dmg;
       }
       else if (hitLoc == "Torso")
       {
         newDmg(dmgToTake, mech.armorTorso, mech.shieldPoints, weaponName);
+        mech.shieldPoints = shld;
         mech.hpTorso -= dmg;
       }
       else if (hitLoc == "Arm")
@@ -206,12 +218,14 @@ public class MechStats : MonoBehaviour {
         if (mech.hpArm > 0)
         {
           newDmg(dmgToTake, mech.armorArm, mech.shieldPoints, weaponName);
+          mech.shieldPoints = shld;
           mech.hpArm -= dmg;
         }
         else
         {
           hitLoc = "Torso";
           newDmg(dmgToTake, mech.armorTorso, mech.shieldPoints, weaponName);
+          mech.shieldPoints = shld;
           mech.hpTorso -= dmg;
         }
       }
@@ -220,12 +234,14 @@ public class MechStats : MonoBehaviour {
         if (mech.hpLeg > 0)
         {
           newDmg(dmgToTake, mech.armorLeg, mech.shieldPoints, weaponName);
+          mech.shieldPoints = shld;
           mech.hpLeg -= dmg;
         }
         else
         {
           hitLoc = "Torso";
           newDmg(dmgToTake, mech.armorTorso, mech.shieldPoints, weaponName);
+          mech.shieldPoints = shld;
           mech.hpTorso -= dmg;
         }
       }
@@ -265,7 +281,12 @@ public class MechStats : MonoBehaviour {
     mech.hpHead = mech.hpHeadMax;
     mech.hpArm = mech.hpArmMax;
     mech.hpLeg = mech.hpLegMax;
+    mech.shieldPoints = mech.shieldPointsMax;
 	}
+  public void repairShield()
+  {
+    mech.shieldPoints = mech.shieldPointsMax;
+  }
 	
 	// void loadWeapons()
 	// {
