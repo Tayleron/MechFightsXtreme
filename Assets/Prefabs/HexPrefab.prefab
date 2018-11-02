@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 64683698946783334}
   m_Layer: 0
   m_Name: HexPrefab
-  m_TagString: Untagged
+  m_TagString: hex
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -338,6 +338,7 @@ MonoBehaviour:
   grid: {fileID: 0}
   x: 0
   y: 0
+  HexModelYHeight: 0
   Elevation: 1
   isWater: 0
   isRamp: 0

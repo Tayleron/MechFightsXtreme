@@ -1,0 +1,41 @@
+
+
+Mech's take the Elevation attribute from the elevation of their containing hex, this lets the game know if they can be hit, by checking if the elevations between
+the attack and the mech allow for it. Line of Sight
+
+This also functions with the use of special abilities such as jump jets and water walk.
+
+
+----------- Code Snippits -------------
+
+
+//Code to change color of hex mesh to red and back
+//via a mouse click
+void MouseOver_Hex(GameObject ourHitObject) 
+	{
+		//Debug.Log("Raycast hit: " + ourHitObject.name);
+    
+		if (Input.GetMouseButtonDown(0)) 
+		{
+      MeshRenderer mr = ourHitObject.GetComponentInChildren<MeshRenderer>();
+      
+			if (mr.material.color == Color.red) 
+			{
+        mr.material.color = Color.white;
+      } 
+			else 
+			{
+        mr.material.color = Color.red;
+      }
+    }
+  }
+
+//Iterate through the dictionary
+	foreach (KeyValuePair<string,GameObject> gridPos in hexValues)
+  {
+    Debug.Log(gridPos);
+  }
+
+//Retreive a value from the hex Coordinates
+  GameObject RetrievedValue = hexValues["14,0"];
+  Debug.Log(RetrievedValue.name);
