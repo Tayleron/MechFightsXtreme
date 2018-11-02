@@ -31,4 +31,5 @@ MonoBehaviour:
   armorLeg: 2
   armorArm: 2
   shieldPoints: 12
+  shieldPointsMax: 12
   weight: 0

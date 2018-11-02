@@ -153,23 +153,52 @@ public class MouseManager : MonoBehaviour {
 			attack();
 		}
 	}
+	//req for selection() to function
+	private bool cancel = false;
+	private int TpTest;
 
   IEnumerator selection()
   {
 		selectedMechLast = selectedMech;
 		selectedMech = null;
     Debug.Log("Select Mech To Attack");
-    yield return new WaitUntil(() => selectedMech != null || Input.GetKey(KeyCode.Escape));
-		//left-click to attack a mech
+    yield return new WaitUntil(() => selectedMech != null || Input.GetKey(KeyCode.Escape) || cancel);
 		
+		//get the TP cost that will need to be spent
+		if (selectedMechLast.noArm)
+		{
+			TpTest = selectedWeapon.weapon.tpCost * 2;
+		}
+		else if (selectedMechLast.oneArm)
+		{
+			TpTest = selectedWeapon.weapon.tpCost + Mathf.RoundToInt(selectedWeapon.weapon.tpCost/2);
+		}
+		else
+		{
+			TpTest = selectedWeapon.weapon.tpCost;
+		}
+		
+		//cancel if escape
 		if (Input.GetKey(KeyCode.Escape))
 		{
 			selectedMech = selectedMechLast;
+			Debug.Log("Attack Canceled");
       yield break;
-		} else if (selectedMech != null)
+		}//cancel if TpTest is too low
+		else if (selectedMechLast.mech.tpCurrent < TpTest)
+		{
+      selectedMech = selectedMechLast;
+      cancel = true;
+      cancel = false;
+      Debug.Log("TP too low");
+      yield break;
+		}//if a new mech is selected, attack it
+		else if (selectedMech != null && selectedMech != selectedMechLast)
     {
+      selectedMechLast.spendTP(selectedWeapon.weapon.tpCost);
       selectedWeapon.atkMech(selectedMech);
       selectedMech = null;
+			yield break;
     }
   }
 
@@ -179,20 +208,25 @@ public class MouseManager : MonoBehaviour {
     if (selectedMech != null)
 		{
 			GUI.Label(new Rect(10, 20, 100, 40), "Mech Selected: " + selectedMech.mech.name);
-			GUI.Label(new Rect(10, 55, 100, 25), selectedMech.mech.hpHead + " head HP");			
+			GUI.Label(new Rect(10, 55, 100, 25), selectedMech.mech.hpHead + " Head HP");			
 			GUI.Label(new Rect(10, 70, 100, 25), selectedMech.mech.hpTorso + " Torso HP");			
 			GUI.Label(new Rect(10, 85, 100, 25), selectedMech.mech.hpArm + " Arm HP");
 			GUI.Label(new Rect(10, 100, 100, 25), selectedMech.mech.hpLeg + " Leg HP");
 			GUI.Label(new Rect(10, 115, 100, 25), selectedMech.mech.shieldPoints + " Shields");
-			if(GUI.Button(new Rect(10, 150, 100, 25), "Reset Health")) 
+			GUI.Label(new Rect(10, 130, 100, 25), selectedMech.mech.tpCurrent + "/" + selectedMech.mech.tpMax + " TP");
+			if(GUI.Button(new Rect(10, 250, 100, 25), "Reset Health")) 
 			{
 				selectedMech.repairAll();
 			}
-			if(GUI.Button(new Rect(10, 180, 100, 25), "Reset Shield")) 
+			if(GUI.Button(new Rect(10, 280, 100, 25), "Reset Shield")) 
 			{
 				selectedMech.repairShield();
 			}
-			if(GUI.Button(new Rect(10, 210, 100, 25), "Attack")) 
+			if(GUI.Button(new Rect(10, 310, 100, 25), "Restore TP")) 
+			{
+        selectedMech.restoreTP();
+			}
+			if(GUI.Button(new Rect(10, 340, 100, 25), "Attack")) 
 			{
         attack();
 			}

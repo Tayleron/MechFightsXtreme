@@ -112,4 +112,5 @@ MonoBehaviour:
   currentHex: {fileID: 0}
   rend: {fileID: 0}
   weapon: {fileID: 0}
+  equippedWeapon: {fileID: 0}
   modelHeight: 0

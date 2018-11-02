@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Gauss Rifle
   m_EditorClassIdentifier: 
   weaponName: Gauss Rifle
-  damage: 6
+  damage: 12
   rateOfFire: 1
   maxRange: 6
   minRange: 0

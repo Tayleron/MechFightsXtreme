@@ -19,8 +19,8 @@ public class MechStats : MonoBehaviour {
 	private int x;
 	private int y;
 	
-	// Use this for initialization
-	void Start () {
+  void Start()
+  {
 		//get original name of the mech
 		OGName = mech.name;
 		//create unique instance of mech (clone)
@@ -28,11 +28,13 @@ public class MechStats : MonoBehaviour {
 		//rename the clone to the orginal name
 		mech.name = OGName;
 
-		//temp instantiate a weapon to test
-		OGName = equippedWeapon.name;
-		equippedWeapon = Instantiate(equippedWeapon);
-		equippedWeapon.name = OGName;
-		
+		//temp instantiate a weapon to test	
+		if (equippedWeapon != null)
+    {
+      OGName = equippedWeapon.name;
+      equippedWeapon = Instantiate(equippedWeapon);
+		  equippedWeapon.name = OGName;
+    }
 		//get the full height of the model
 		modelHeight = mech.MechPrefab.GetComponent<Renderer>().bounds.size.y;
     moveUnit();
@@ -62,9 +64,6 @@ public class MechStats : MonoBehaviour {
   private float randHit;
   //req to set hit location
   private string hitLoc;
-
-  private int missDice = 0;
-  private int misses = 0;
 
   //figure out what location was randomly hit
   //maybe I could conbine this with the damaging if method? Far future thing.
@@ -170,6 +169,33 @@ public class MechStats : MonoBehaviour {
 		Debug.Log("Damage dealt: " + dmg);
 	}
 
+  public void spendTP(int weaponTP)
+  {
+    if (noArm)
+    {
+      mech.tpCurrent -= weaponTP*2;
+    } 
+    else if (oneArm)
+    {
+      mech.tpCurrent -= weaponTP + Mathf.RoundToInt(weaponTP/2);
+    }
+    else
+    {
+      mech.tpCurrent -= weaponTP;
+    }
+    Debug.Log("new TP " + mech.tpCurrent + "/" + mech.tpMax);
+  }
+
+  //req for one arm/no arm implimentation
+  public bool oneArm = false;
+  public bool noArm = false;
+  //req for legged mech logic
+  public bool oneLeg = false;
+
+  //req for miss dice
+  private int missDice = 0;
+  private int misses = 0;
+  
   //method to take damage (with hit Locations)
 	//provide the damage to take as an argument
 	//which should come from the weapon's damage stat
@@ -253,15 +279,31 @@ public class MechStats : MonoBehaviour {
     if (mech.hpArm <= 0)
     {
       Debug.Log(mech.name + " arm destroyed. TP cost to fire weapons increased.");
-      //TODO: Arm damaged logic
-      //double TP cost to fire weapons
-      //reduce number of weapons able to be fired to 1
+      //first time losing an arm
+      oneArm = true;
+      //set health for second arm
+      mech.hpArm = mech.hpArmMax;
+      //if arm health drops again lose second arm
+      if (oneArm && mech.hpArm <= 0)
+      {
+        noArm = true;
+      }
+      //TODO: reduce number of weapons able to be fired to 2 and then 1
     }
     //check to see if the mech is legged
     if (mech.hpLeg <= 0)
     {
       Debug.Log(mech.name + " leg destroyed. Movement speed reduced.");
-      //TODO: leg damaged logic
+      //first leg destroyed
+      oneLeg = true;
+      //set health for second leg
+      mech.hpLeg = mech.hpLegMax;
+      //if leg health drops again lose second leg and die
+      if (oneLeg && mech.hpLeg <= 0)
+      {
+        Debug.Log(mech.name + " final leg destroyed. Mech destroyed.");
+        Destroy(gameObject);
+      }
       //increase TP per move + 1
       //halve max movement distance
     }
@@ -286,6 +328,10 @@ public class MechStats : MonoBehaviour {
   public void repairShield()
   {
     mech.shieldPoints = mech.shieldPointsMax;
+  }
+  public void restoreTP()
+  {
+    mech.tpCurrent = mech.tpMax;
   }
 	
 	// void loadWeapons()

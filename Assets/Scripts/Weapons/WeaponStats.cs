@@ -6,13 +6,12 @@ public class WeaponStats : MonoBehaviour {
 
 	public Weapon weapon;
 	public MechStats mech;
-	public MouseManager MM;
 
 
 	// Use this for initialization
 	void Start () {
-		Debug.Log("I am a: " + weapon.weaponName + " and I do: " + weapon.damage 
-		+ " damage.");		
+		// Debug.Log("I am a: " + weapon.weaponName + " and I do: " + weapon.damage 
+		// + " damage.");		
 	}
 	
 	//include the mech to be attacked as an argument
