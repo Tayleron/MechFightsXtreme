@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Pathfinding;
 
 public class MouseManager : MonoBehaviour {
 
@@ -15,11 +16,14 @@ public class MouseManager : MonoBehaviour {
 	Vector3 LastMousePosition;
   Vector3 cameraTargetOffset;
 
+	//Testing Pathing
+	Seeker seeker;
+
 	
 	void Start() {
-		
-			
-	}
+    
+
+  }
 	// Update is called once per frame
 	void Update () {
 		//Do nothing if mousing over UI buttons
@@ -103,6 +107,9 @@ public class MouseManager : MonoBehaviour {
 		
 	}
 	
+	public Vector3 start;
+	public Vector3 end;
+	
 	//Click on Hex
   void MouseOver_Hex(GameObject ourHitObject) 
 	{
@@ -114,10 +121,14 @@ public class MouseManager : MonoBehaviour {
 			//move the selected mech
 			if (selectedMech != null && selectedMech.mech.movementRemaining >= selectedMech.mech.movementCostPerHex)
 			{
+				//set the starting node for pathfinding
+				start = selectedMech.transform.localPosition;
 				//change the parent of the selected mech to the newly clicked hex
 				selectedMech.transform.parent = selectedHex.transform;
-				//move the mech to the new hex via the mech's own method
-				selectedMech.moveUnit();
+				//set the end point for pathfinding
+				end = selectedMech.transform.localPosition;
+				//call the moveUnit method for the selectedMech and pass it the pathfinding coords
+				selectedMech.moveUnit(start, end);
 				//deselect the mech
 				selectedMech = null;
 			}

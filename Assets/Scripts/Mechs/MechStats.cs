@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 
 public class MechStats : MonoBehaviour {
@@ -18,11 +19,15 @@ public class MechStats : MonoBehaviour {
 
 	private int x;
 	private int y;
+
 	
   void Start()
   {
-		//get original name of the mech
-		OGName = mech.name;
+    //testing Pathing
+    seeker = GetComponent<Seeker>();
+
+    //get original name of the mech
+    OGName = mech.name;
 		//create unique instance of mech (clone)
     mech = Instantiate(mech);
 		//rename the clone to the orginal name
@@ -37,7 +42,7 @@ public class MechStats : MonoBehaviour {
     }
 		//get the full height of the model
 		modelHeight = mech.MechPrefab.GetComponent<Renderer>().bounds.size.y;
-    moveUnit();
+    moveUnit(Vector3.zero, Vector3.zero);
     setCurrentHex();
 
     Debug.Log("My name is: " + mech.mechName +
@@ -53,11 +58,25 @@ public class MechStats : MonoBehaviour {
     y = currentHex.GetComponent<Hex>().y;
   }
 
-	public void moveUnit()
+
+  //Testing Pathing
+  Seeker seeker;
+
+	public void moveUnit(Vector3 start, Vector3 end)
 	{
-		//set the position of the model to stand on the top of its parent hex
-    transform.localPosition = new Vector3(0, 0, modelHeight / 1.5f);
+    //Testing Pathing
+    seeker.StartPath(start, end, onPathComplete);
+
 	}
+  public float len;
+  //Testing Pathing
+  public void onPathComplete (Path p)
+  {
+    len = p.path.Count;
+    Debug.Log("length: " + len);
+    //set the position of the model to stand on the top of its parent hex
+    transform.localPosition = new Vector3(0, 0, modelHeight / 1.5f);
+  }
 
   
   //req to randomize hit locations

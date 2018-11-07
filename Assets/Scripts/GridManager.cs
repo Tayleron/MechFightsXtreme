@@ -51,6 +51,8 @@ public class GridManager : MonoBehaviour
   public GameObject Railgun;
   public GameObject Rockets;
 
+  AstarPath AstarPath;
+
   //Dictionary of all hexes, added to by createGrid()
   Dictionary<string, GameObject> hexValues = new Dictionary<string, GameObject>();
 
@@ -214,6 +216,7 @@ public class GridManager : MonoBehaviour
 	{
 		setSizes();
 		createGrid();
+    AstarPath.active.Scan();
     spawnUnitAt("Petrel", "10,14");
     spawnUnitAt("Vanga", "8,14");
     spawnUnitAt("Jakamar", "12,16");
