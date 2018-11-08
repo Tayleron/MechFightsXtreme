@@ -66,9 +66,8 @@ public class MechStats : MonoBehaviour {
 	{
     //Testing Pathing
     seeker.StartPath(start, end, onPathComplete);
-
 	}
-  public float len;
+
   //Testing Pathing
   public void onPathComplete (Path p)
   {
@@ -193,15 +192,15 @@ public class MechStats : MonoBehaviour {
   public void spendTP(int weaponTP)
   {
     if (noArm)
-    {
+    { //double TP Cost if no arms remaining
       mech.tpCurrent -= weaponTP*2;
     } 
     else if (oneArm)
-    {
+    { //+50% TP cost if one arm remaining
       mech.tpCurrent -= weaponTP + Mathf.RoundToInt(weaponTP/2);
     }
     else
-    {
+    { //normal TP cost if arms are normal
       mech.tpCurrent -= weaponTP;
     }
     Debug.Log("new TP " + mech.tpCurrent + "/" + mech.tpMax);

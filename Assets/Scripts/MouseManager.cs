@@ -164,6 +164,7 @@ public class MouseManager : MonoBehaviour {
 			attack();
 		}
 	}
+
 	//req for selection() to function
 	private bool cancel = false;
 	private int TpTest;
@@ -175,7 +176,7 @@ public class MouseManager : MonoBehaviour {
     Debug.Log("Select Mech To Attack");
     yield return new WaitUntil(() => selectedMech != null || Input.GetKey(KeyCode.Escape) || cancel);
 		
-		//get the TP cost that will need to be spent
+		//get the TP cost that will need to be spent based on the mech's Arm bools
 		if (selectedMechLast.noArm)
 		{
 			TpTest = selectedWeapon.weapon.tpCost * 2;
@@ -195,7 +196,8 @@ public class MouseManager : MonoBehaviour {
 			selectedMech = selectedMechLast;
 			Debug.Log("Attack Canceled");
       yield break;
-		}//cancel if TpTest is too low
+		}
+		//cancel if TpTest is too low
 		else if (selectedMechLast.mech.tpCurrent < TpTest)
 		{
       selectedMech = selectedMechLast;
@@ -203,17 +205,21 @@ public class MouseManager : MonoBehaviour {
       cancel = false;
       Debug.Log("TP too low");
       yield break;
-		}//if a new mech is selected, attack it
+		}
+		//if a new mech is selected, attack it
 		else if (selectedMech != null && selectedMech != selectedMechLast)
     {
+			//spend the TP required to attack with the selected weapon
       selectedMechLast.spendTP(selectedWeapon.weapon.tpCost);
+			//call the weapon's method of attack, passing it the attacked mech
       selectedWeapon.atkMech(selectedMech);
+			//deselect mech
       selectedMech = null;
 			yield break;
     }
   }
 
-	//temp GUI element to show mech as selected
+	//temp GUI element to show selected mech stats + buttons
   void OnGUI()
   {
     if (selectedMech != null)
