@@ -2,6 +2,11 @@
 /// \page changelog Changelog
 /// \order{-10}
 ///
+/// - 4.2.3 (2018-11-07)
+/// 	- Fixed some compiler warnings in the free version on newer versions of Unity.
+/// 	- Fixed a bug which caused point graphs to interpret the nearest node distance limit as being 1/1000th the actual value in the free version of the package and in the pro version when not using the 'optimize for sparse graph' option.
+/// 		This bug caused the point graph example scene to not work in the free version of the package.
+///
 /// - 4.2.2 (2018-10-25)
 /// 	- Fixed upgrading from an earlier 4.x version to 4.2 could cause compiler errors in some newer versions of Unity because the UnityPackage doesn't import the new directory structure correctly.
 ///

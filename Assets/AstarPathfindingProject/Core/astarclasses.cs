@@ -583,8 +583,10 @@ namespace Pathfinding {
 				backupPositionData.Add(node.position);
 				backupData.Add(node.Penalty);
 				backupData.Add(node.Flags);
+#if !ASTAR_NO_GRID_GRAPH
 				var gridNode = node as GridNode;
 				if (gridNode != null) backupData.Add(gridNode.InternalGridFlags);
+#endif
 			}
 		}
 
@@ -614,11 +616,13 @@ namespace Pathfinding {
 					changedNodes[i].Flags = backupData[counter];
 					changedNodes[i].HierarchicalNodeIndex = tmp;
 					counter++;
+#if !ASTAR_NO_GRID_GRAPH
 					var gridNode = changedNodes[i] as GridNode;
 					if (gridNode != null) {
 						gridNode.InternalGridFlags = (ushort)backupData[counter];
 						counter++;
 					}
+#endif
 					changedNodes[i].position = backupPositionData[i];
 					changedNodes[i].SetConnectivityDirty();
 				}

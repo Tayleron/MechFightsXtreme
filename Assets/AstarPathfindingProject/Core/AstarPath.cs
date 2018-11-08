@@ -26,7 +26,7 @@ using Thread = System.Threading.Thread;
 [HelpURL("http://arongranberg.com/astar/docs/class_astar_path.php")]
 public class AstarPath : VersionedMonoBehaviour {
 	/// <summary>The version number for the A* %Pathfinding Project</summary>
-	public static readonly System.Version Version = new System.Version(4, 2, 2);
+	public static readonly System.Version Version = new System.Version(4, 2, 3);
 
 	/// <summary>Information about where the package was downloaded</summary>
 	public enum AstarDistribution { WebsiteDownload, AssetStore };
@@ -379,6 +379,16 @@ public class AstarPath : VersionedMonoBehaviour {
 	/// @{
 	/// </summary>
 
+#if ProfileAstar
+	/// <summary>
+	/// How many paths has been computed this run. From application start.\n
+	/// Debugging variable
+	/// </summary>
+	public static int PathsCompleted = 0;
+
+	public static System.Int64 TotalSearchedNodes = 0;
+	public static System.Int64 TotalSearchTime = 0;
+#endif
 
 	/// <summary>
 	/// The time it took for the last call to Scan() to complete.
@@ -800,6 +810,7 @@ public class AstarPath : VersionedMonoBehaviour {
 		AstarProfiler.EndProfile("OnDrawGizmos");
 	}
 
+#if !ASTAR_NO_GUI
 	/// <summary>
 	/// Draws the InGame debugging (if enabled), also shows the fps if 'L' is pressed down.
 	/// See: <see cref="logPathResults"/> PathLog
@@ -809,6 +820,7 @@ public class AstarPath : VersionedMonoBehaviour {
 			GUI.Label(new Rect(5, 5, 400, 600), inGameDebugPath);
 		}
 	}
+#endif
 
 	/// <summary>
 	/// Prints path results to the log. What it prints can be controled using <see cref="logPathResults"/>.

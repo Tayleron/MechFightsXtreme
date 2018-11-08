@@ -236,6 +236,9 @@ namespace Pathfinding {
 				return;
 			}
 
+#if ASTAR_ATAVISM
+			EditorGUILayout.HelpBox("This is a special version of the A* Pathfinding Project for Atavism. This version only supports scanning recast graphs and exporting them, but no pathfinding during runtime.", MessageType.Info);
+#endif
 
 			EditorGUI.BeginChangeCheck();
 
@@ -261,6 +264,13 @@ namespace Pathfinding {
 			}
 
 
+	#if ProfileAstar
+			if (GUILayout.Button("Log Profiles")) {
+				AstarProfiler.PrintResults();
+				AstarProfiler.PrintFastResults();
+				AstarProfiler.Reset();
+			}
+	#endif
 
 			// Handle undo
 			SaveGraphsAndUndo(storedEventType, storedEventCommand);
@@ -412,6 +422,7 @@ namespace Pathfinding {
 				GUI.changed = true;
 			}
 
+#if !ASTAR_ATAVISM
 			System.Version newVersion = AstarUpdateChecker.latestVersion;
 			bool beta = false;
 
@@ -432,12 +443,14 @@ namespace Pathfinding {
 				GUIUtilityx.PopTint();
 				GUILayout.Space(20);
 			}
+#endif
 
 			GUILayout.EndHorizontal();
 
 			if (aboutArea.BeginFade()) {
 				GUILayout.Label("The A* Pathfinding Project was made by Aron Granberg\nYour current version is "+AstarPath.Version);
 
+#if !ASTAR_ATAVISM
 				if (FullyDefinedVersion(newVersion) > FullyDefinedVersion(AstarPath.Version)) {
 					EditorGUILayout.HelpBox("A new "+(beta ? "beta " : "")+"version of the A* Pathfinding Project is available, the new version is "+
 						newVersion, MessageType.Info);
@@ -458,6 +471,7 @@ namespace Pathfinding {
 
 					GUIUtilityx.PopTint();
 				}
+#endif
 
 				if (GUILayout.Button(new GUIContent("Documentation", "Open the documentation for the A* Pathfinding Project"))) {
 					Application.OpenURL(AstarUpdateChecker.GetURL("documentation"));
@@ -815,6 +829,7 @@ namespace Pathfinding {
 			alwaysVisibleArea.HeaderLabel("Pathfinding");
 			alwaysVisibleArea.BeginFade();
 
+#if !ASTAR_ATAVISM
 			EditorGUI.BeginDisabledGroup(Application.isPlaying);
 
 			script.threadCount = (ThreadCount)EditorGUILayout.EnumPopup(new GUIContent("Thread Count", "Number of threads to run the pathfinding in (if any). More threads " +
@@ -878,6 +893,7 @@ namespace Pathfinding {
 			script.fullGetNearestSearch = EditorGUILayout.Toggle(new GUIContent("Full Get Nearest Node Search", "Forces more accurate searches on all graphs. " +
 					"Normally only the closest graph in the initial fast check will perform additional searches, " +
 					"if this is toggled, all graphs will do additional searches. Slower, but more accurate"), script.fullGetNearestSearch);
+#endif
 			script.scanOnStartup = EditorGUILayout.Toggle(new GUIContent("Scan on Awake", "Scan all graphs on Awake. If this is false, you must call AstarPath.active.Scan () yourself. Useful if you want to make changes to the graphs with code."), script.scanOnStartup);
 
 			alwaysVisibleArea.End();

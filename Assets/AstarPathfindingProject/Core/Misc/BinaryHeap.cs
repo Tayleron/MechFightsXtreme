@@ -82,6 +82,14 @@ namespace Pathfinding {
 
 		/// <summary>Removes all elements from the heap</summary>
 		public void Clear () {
+#if DECREASE_KEY
+			// Clear all heap indices
+			// This is important to avoid bugs
+			for (int i = 0; i < numberOfItems; i++) {
+				heap[i].node.heapIndex = NotInHeap;
+			}
+#endif
+
 			numberOfItems = 0;
 		}
 
@@ -113,6 +121,9 @@ namespace Pathfinding {
 
 			var newHeap = new Tuple[newSize];
 			heap.CopyTo(newHeap, 0);
+			#if ASTARDEBUG
+			UnityEngine.Debug.Log("Resizing binary heap to "+newSize);
+			#endif
 			heap = newHeap;
 		}
 
@@ -120,6 +131,13 @@ namespace Pathfinding {
 		public void Add (PathNode node) {
 			if (node == null) throw new System.ArgumentNullException("node");
 
+#if DECREASE_KEY
+			// Check if node is already in the heap
+			if (node.heapIndex != NotInHeap) {
+				DecreaseKey(heap[node.heapIndex], node.heapIndex);
+				return;
+			}
+#endif
 
 			if (numberOfItems == heap.Length) {
 				Expand();
@@ -147,6 +165,9 @@ namespace Pathfinding {
 					// (we don't really need to store the bubble node until we know the final index though
 					// so we do that after the loop instead)
 					heap[bubbleIndex] = heap[parentIndex];
+#if DECREASE_KEY
+					heap[bubbleIndex].node.heapIndex = (ushort)bubbleIndex;
+#endif
 					bubbleIndex = parentIndex;
 				} else {
 					break;
@@ -154,12 +175,18 @@ namespace Pathfinding {
 			}
 
 			heap[bubbleIndex] = node;
+#if DECREASE_KEY
+			node.node.heapIndex = (ushort)bubbleIndex;
+#endif
 		}
 
 		/// <summary>Returns the node with the lowest F score from the heap</summary>
 		public PathNode Remove () {
 			PathNode returnItem = heap[0].node;
 
+#if DECREASE_KEY
+			returnItem.heapIndex = NotInHeap;
+#endif
 
 			numberOfItems--;
 			if (numberOfItems == 0) return returnItem;
@@ -218,6 +245,9 @@ namespace Pathfinding {
 				// in local variable and only assign it once we know the final index)
 				if (parent != swapIndex) {
 					heap[parent] = heap[swapIndex];
+#if DECREASE_KEY
+					heap[parent].node.heapIndex = (ushort)parent;
+#endif
 				} else {
 					break;
 				}
@@ -225,6 +255,9 @@ namespace Pathfinding {
 
 			// Assign element to the final position
 			heap[swapIndex] = swapItem;
+#if DECREASE_KEY
+			swapItem.node.heapIndex = (ushort)swapIndex;
+#endif
 
 			// For debugging
 			// Validate ();
@@ -238,6 +271,11 @@ namespace Pathfinding {
 				if (heap[parentIndex].F > heap[i].F) {
 					throw new System.Exception("Invalid state at " + i + ":" +  parentIndex + " ( " + heap[parentIndex].F + " > " + heap[i].F + " ) ");
 				}
+#if DECREASE_KEY
+				if (heap[i].node.heapIndex != i) {
+					throw new System.Exception("Invalid heap index");
+				}
+#endif
 			}
 		}
 
@@ -246,6 +284,10 @@ namespace Pathfinding {
 		/// Usually called after the hTarget on a path has been changed
 		/// </summary>
 		public void Rebuild () {
+			#if ASTARDEBUG
+			int changes = 0;
+			#endif
+
 			for (int i = 2; i < numberOfItems; i++) {
 				int bubbleIndex = i;
 				var node = heap[i];
@@ -255,15 +297,28 @@ namespace Pathfinding {
 
 					if (nodeF < heap[parentIndex].F) {
 						heap[bubbleIndex] = heap[parentIndex];
+#if DECREASE_KEY
+						heap[bubbleIndex].node.heapIndex = (ushort)bubbleIndex;
+#endif
 
 						heap[parentIndex] = node;
+#if DECREASE_KEY
+						heap[parentIndex].node.heapIndex = (ushort)parentIndex;
+#endif
 
 						bubbleIndex = parentIndex;
+						#if ASTARDEBUG
+						changes++;
+						#endif
 					} else {
 						break;
 					}
 				}
 			}
+
+			#if ASTARDEBUG
+			UnityEngine.Debug.Log("+++ Rebuilt Heap - "+changes+" changes +++");
+			#endif
 		}
 	}
 }

@@ -8,6 +8,7 @@ namespace Pathfinding {
 		public GridNode (AstarPath astar) : base(astar) {
 		}
 
+#if !ASTAR_NO_GRID_GRAPH
 		private static GridGraph[] _gridGraphs = new GridGraph[0];
 		public static GridGraph GetGridGraph (uint graphIndex) { return _gridGraphs[(int)graphIndex]; }
 
@@ -329,5 +330,26 @@ namespace Pathfinding {
 			position = ctx.DeserializeInt3();
 			gridFlags = ctx.reader.ReadUInt16();
 		}
+#else
+		public override void AddConnection (GraphNode node, uint cost) {
+			throw new System.NotImplementedException();
+		}
+
+		public override void ClearConnections (bool alsoReverse) {
+			throw new System.NotImplementedException();
+		}
+
+		public override void GetConnections (GraphNodeDelegate del) {
+			throw new System.NotImplementedException();
+		}
+
+		public override void Open (Path path, PathNode pathNode, PathHandler handler) {
+			throw new System.NotImplementedException();
+		}
+
+		public override void RemoveConnection (GraphNode node) {
+			throw new System.NotImplementedException();
+		}
+#endif
 	}
 }

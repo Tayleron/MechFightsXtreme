@@ -174,6 +174,10 @@ namespace Pathfinding {
 					AstarPath.active.UpdateGraphs(newBounds);
 				}
 
+	#if ASTARDEBUG
+				Debug.DrawLine(prevBounds.min, prevBounds.max, Color.yellow);
+				Debug.DrawLine(newBounds.min, newBounds.max, Color.red);
+	#endif
 				prevBounds = newBounds;
 			}
 

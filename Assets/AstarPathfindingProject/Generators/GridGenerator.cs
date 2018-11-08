@@ -1870,6 +1870,11 @@ namespace Pathfinding {
 			int erosion;
 			CalculateAffectedRegions(o, out originalRect, out affectRect, out physicsRect, out willChangeWalkability, out erosion);
 
+#if ASTARDEBUG
+			var debugMatrix = transform * Matrix4x4.TRS(new Vector3(0.5f, 0, 0.5f), Quaternion.identity, Vector3.one);
+
+			originalRect.DebugDraw(debugMatrix, Color.red);
+#endif
 
 			// Rect which covers the whole grid
 			var gridRect = new IntRect(0, 0, width-1, depth-1);
@@ -1918,6 +1923,10 @@ namespace Pathfinding {
 				}
 			}
 
+#if ASTARDEBUG
+			physicsRect.DebugDraw(debugMatrix, Color.blue);
+			affectRect.DebugDraw(debugMatrix, Color.black);
+#endif
 
 			// Recalculate connections
 			if (willChangeWalkability && erosion == 0) {
@@ -1936,6 +1945,10 @@ namespace Pathfinding {
 				erosionRect1 = IntRect.Intersection(erosionRect1, gridRect);
 				erosionRect2 = IntRect.Intersection(erosionRect2, gridRect);
 
+#if ASTARDEBUG
+				erosionRect1.DebugDraw(debugMatrix, Color.magenta);
+				erosionRect2.DebugDraw(debugMatrix, Color.cyan);
+#endif
 
 
 				// * all nodes inside clampedRect might have had their walkability changed

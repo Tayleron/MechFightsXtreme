@@ -301,6 +301,10 @@ namespace Pathfinding {
 		/// Async graph updates will be executed by this method in another thread.
 		/// </summary>
 		void ProcessGraphUpdatesAsync () {
+#if UNITY_2017_3_OR_NEWER
+			Profiler.BeginThreadProfiling("Pathfinding", "Threaded Graph Updates");
+#endif
+
 			var handles = new [] { graphUpdateAsyncEvent, exitAsyncThread };
 
 			while (true) {
@@ -312,10 +316,16 @@ namespace Pathfinding {
 					// Abort thread and clear queue
 					graphUpdateQueueAsync.Clear();
 					asyncGraphUpdatesComplete.Set();
+#if UNITY_2017_3_OR_NEWER
+					Profiler.EndThreadProfiling();
+#endif
 					return;
 				}
 
 				while (graphUpdateQueueAsync.Count > 0) {
+#if UNITY_2017_3_OR_NEWER
+					asyncUpdateProfilingSampler.Begin();
+#endif
 					// Note that no locking is required here because the main thread
 					// cannot access it until asyncGraphUpdatesComplete is signaled
 					GUOSingle aguo = graphUpdateQueueAsync.Dequeue();
@@ -330,6 +340,9 @@ namespace Pathfinding {
 					} catch (System.Exception e) {
 						Debug.LogError("Exception while updating graphs:\n"+e);
 					}
+#if UNITY_2017_3_OR_NEWER
+					asyncUpdateProfilingSampler.End();
+#endif
 				}
 
 				// Done

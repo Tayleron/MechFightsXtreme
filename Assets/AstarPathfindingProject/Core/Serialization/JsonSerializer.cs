@@ -465,10 +465,11 @@ namespace Pathfinding.Serialization {
 		byte[] SerializeNodeLinks () {
 			var stream = new MemoryStream();
 
+#if !ASTAR_NO_LINKS
 			var writer = new BinaryWriter(stream);
 			var ctx = new GraphSerializationContext(writer);
-
 			NodeLink2.SerializeReferences(ctx);
+#endif
 			return stream.ToArray();
 		}
 
@@ -712,6 +713,7 @@ namespace Pathfinding.Serialization {
 		}
 
 		void DeserializeNodeLinks (GraphNode[] int2Node) {
+#if !ASTAR_NO_LINKS
 			var entry = GetEntry("node_link2"+binaryExt);
 
 			if (entry == null)
@@ -720,6 +722,7 @@ namespace Pathfinding.Serialization {
 			var reader = GetBinaryReader(entry);
 			var ctx = new GraphSerializationContext(reader, int2Node, 0, meta);
 			NodeLink2.DeserializeReferences(ctx);
+#endif
 		}
 
 		/// <summary>Calls PostDeserialization on all loaded graphs</summary>

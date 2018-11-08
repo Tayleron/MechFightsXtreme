@@ -27,6 +27,7 @@ namespace Pathfinding.Util {
 	/// See: Pathfinding.Util.ListPool
 	/// </summary>
 	public static class ArrayPool<T>{
+#if !ASTAR_NO_POOLING
 		/// <summary>
 		/// Maximum length of an array pooled using ClaimWithExactLength.
 		/// Arrays with lengths longer than this will silently not be pooled.
@@ -39,7 +40,10 @@ namespace Pathfinding.Util {
 		/// </summary>
 		static readonly Stack<T[]>[] pool = new Stack<T[]>[31];
 		static readonly Stack<T[]>[] exactPool = new Stack<T[]>[MaximumExactArrayLength+1];
+#if !ASTAR_OPTIMIZE_POOLING
 		static readonly HashSet<T[]> inPool = new HashSet<T[]>();
+#endif
+#endif
 
 		/// <summary>
 		/// Returns an array with at least the specified length.
@@ -59,6 +63,7 @@ namespace Pathfinding.Util {
 			if (bucketIndex == 30)
 				throw new System.ArgumentException("Too high minimum length");
 
+#if !ASTAR_NO_POOLING
 			lock (pool) {
 				if (pool[bucketIndex] == null) {
 					pool[bucketIndex] = new Stack<T[]>();
@@ -66,10 +71,13 @@ namespace Pathfinding.Util {
 
 				if (pool[bucketIndex].Count > 0) {
 					var array = pool[bucketIndex].Pop();
+#if !ASTAR_OPTIMIZE_POOLING
 					inPool.Remove(array);
+#endif
 					return array;
 				}
 			}
+#endif
 			return new T[1 << bucketIndex];
 		}
 
@@ -84,8 +92,8 @@ namespace Pathfinding.Util {
 		/// You cannot rely on it being zeroed out.
 		/// </summary>
 		public static T[] ClaimWithExactLength (int length) {
+#if !ASTAR_NO_POOLING
 			bool isPowerOfTwo = length != 0 && (length & (length - 1)) == 0;
-
 			if (isPowerOfTwo) {
 				// Will return the correct array length
 				return Claim(length);
@@ -96,11 +104,14 @@ namespace Pathfinding.Util {
 					Stack<T[]> stack = exactPool[length];
 					if (stack != null && stack.Count > 0) {
 						var array = stack.Pop();
+#if !ASTAR_OPTIMIZE_POOLING
 						inPool.Remove(array);
+#endif
 						return array;
 					}
 				}
 			}
+#endif
 			return new T[length];
 		}
 
@@ -115,13 +126,16 @@ namespace Pathfinding.Util {
 				throw new System.ArgumentException("Expected array type " + typeof(T[]).Name + " but found " + array.GetType().Name + "\nAre you using the correct generic class?\n");
 			}
 
+#if !ASTAR_NO_POOLING
 			bool isPowerOfTwo = array.Length != 0 && (array.Length & (array.Length - 1)) == 0;
 			if (!isPowerOfTwo && !allowNonPowerOfTwo && array.Length != 0) throw new System.ArgumentException("Length is not a power of 2");
 
 			lock (pool) {
+#if !ASTAR_OPTIMIZE_POOLING
 				if (!inPool.Add(array)) {
 					throw new InvalidOperationException("You are trying to pool an array twice. Please make sure that you only pool it once.");
 				}
+#endif
 				if (isPowerOfTwo) {
 					int bucketIndex = 0;
 					while ((1 << bucketIndex) < array.Length && bucketIndex < 30) {
@@ -139,6 +153,7 @@ namespace Pathfinding.Util {
 					stack.Push(array);
 				}
 			}
+#endif
 			array = null;
 		}
 	}

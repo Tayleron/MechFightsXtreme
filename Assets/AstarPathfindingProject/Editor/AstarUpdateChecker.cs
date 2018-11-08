@@ -1,5 +1,8 @@
 using UnityEngine;
 using UnityEditor;
+#if UNITY_2018_1_OR_NEWER
+using UnityEngine.Networking;
+#endif
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,8 +10,13 @@ namespace Pathfinding {
 	/// <summary>Handles update checking for the A* Pathfinding Project</summary>
 	[InitializeOnLoad]
 	public static class AstarUpdateChecker {
+#if UNITY_2018_1_OR_NEWER
+		/// <summary>Used for downloading new version information</summary>
+		static UnityWebRequest updateCheckDownload;
+#else
 		/// <summary>Used for downloading new version information</summary>
 		static WWW updateCheckDownload;
+#endif
 
 		static System.DateTime _lastUpdateCheck;
 		static bool _lastUpdateCheckRead;
@@ -159,7 +167,12 @@ namespace Pathfinding {
 					updateCheckDownload = null;
 					return false;
 				}
+#if UNITY_2018_1_OR_NEWER
+				UpdateCheckCompleted(updateCheckDownload.downloadHandler.text);
+				updateCheckDownload.Dispose();
+#else
 				UpdateCheckCompleted(updateCheckDownload.text);
+#endif
 				updateCheckDownload = null;
 			}
 
@@ -206,7 +219,12 @@ namespace Pathfinding {
 						   "&unityversion="+Application.unityVersion +
 						   "&branch="+AstarPath.Branch;
 
+#if UNITY_2018_1_OR_NEWER
+			updateCheckDownload = UnityWebRequest.Get(query);
+			updateCheckDownload.SendWebRequest();
+#else
 			updateCheckDownload = new WWW(query);
+#endif
 			lastUpdateCheck = System.DateTime.UtcNow;
 		}
 
@@ -224,6 +242,9 @@ namespace Pathfinding {
 
 			hasParsedServerMessage = true;
 
+			#if ASTARDEBUG
+			Debug.Log("Result from update check:\n"+result);
+			#endif
 
 			string[] splits = result.Split('|');
 			latestVersionDescription = splits.Length > 1 ? splits[1] : "";
@@ -254,6 +275,7 @@ namespace Pathfinding {
 		}
 
 		static void ShowUpdateWindowIfRelevant () {
+#if !ASTAR_ATAVISM
 			try {
 				System.DateTime remindDate;
 				var remindVersion = new System.Version(EditorPrefs.GetString("AstarRemindUpdateVersion", "0.0.0.0"));
@@ -279,6 +301,7 @@ namespace Pathfinding {
 
 				AstarUpdateWindow.Init(latestVersion, latestVersionDescription);
 			}
+#endif
 		}
 	}
 }

@@ -72,8 +72,10 @@ public class MechStats : MonoBehaviour {
   //Testing Pathing
   public void onPathComplete (Path p)
   {
-    len = p.path.Count;
-    Debug.Log("length: " + len);
+    foreach (Vector3 position in p.vectorPath)
+    {
+      Debug.Log("Waypoint: " + position);
+    }
     //set the position of the model to stand on the top of its parent hex
     transform.localPosition = new Vector3(0, 0, modelHeight / 1.5f);
   }

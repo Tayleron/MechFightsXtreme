@@ -13,6 +13,7 @@ namespace Pathfinding {
 		/// This function should not be used directly. Instead use the Path.Claim and Path.Release functions.
 		/// </summary>
 		public static void Pool (Path path) {
+			#if !ASTAR_NO_POOLING
 			lock (pool) {
 				if (((IPathInternals)path).Pooled) {
 					throw new System.ArgumentException("The path is already pooled.");
@@ -28,6 +29,7 @@ namespace Pathfinding {
 				((IPathInternals)path).OnEnterPool();
 				poolStack.Push(path);
 			}
+			#endif
 		}
 
 		/// <summary>Total created instances of paths of the specified type</summary>
@@ -53,6 +55,11 @@ namespace Pathfinding {
 
 		/// <summary>Get a path from the pool or create a new one if the pool is empty</summary>
 		public static T GetPath<T>() where T : Path, new() {
+			#if ASTAR_NO_POOLING
+			T result = new T();
+			((IPathInternals)result).Reset();
+			return result;
+			#else
 			lock (pool) {
 				T result;
 				Stack<Path> poolStack;
@@ -74,6 +81,7 @@ namespace Pathfinding {
 				((IPathInternals)result).Reset();
 				return result;
 			}
+			#endif
 		}
 	}
 }

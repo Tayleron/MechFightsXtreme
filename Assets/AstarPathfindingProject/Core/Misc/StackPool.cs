@@ -36,6 +36,9 @@ namespace Pathfinding.Util {
 		/// After usage, this stack should be released using the Release function (though not strictly necessary).
 		/// </summary>
 		public static Stack<T> Claim () {
+#if ASTAR_NO_POOLING
+			return new Stack<T>();
+#else
 			lock (pool) {
 				if (pool.Count > 0) {
 					Stack<T> ls = pool[pool.Count-1];
@@ -45,6 +48,7 @@ namespace Pathfinding.Util {
 			}
 
 			return new Stack<T>();
+#endif
 		}
 
 		/// <summary>
@@ -64,6 +68,7 @@ namespace Pathfinding.Util {
 		/// Releasing a stack twice will cause an error.
 		/// </summary>
 		public static void Release (Stack<T> stack) {
+#if !ASTAR_NO_POOLING
 			stack.Clear();
 
 			lock (pool) {
@@ -72,6 +77,7 @@ namespace Pathfinding.Util {
 
 				pool.Add(stack);
 			}
+#endif
 		}
 
 		/// <summary>

@@ -21,6 +21,15 @@ namespace Pathfinding {
 		/// <summary>The path request (in this thread, if multithreading is used) which last used this node</summary>
 		public ushort pathID;
 
+#if DECREASE_KEY
+		/// <summary>
+		/// Index of the node in the binary heap.
+		/// The open list in the A* algorithm is backed by a binary heap.
+		/// To support fast 'decrease key' operations, the index of the node
+		/// is saved here.
+		/// </summary>
+		public ushort heapIndex = BinaryHeap.NotInHeap;
+#endif
 
 		/// <summary>Bitpacked variable which stores several fields</summary>
 		private uint flags;

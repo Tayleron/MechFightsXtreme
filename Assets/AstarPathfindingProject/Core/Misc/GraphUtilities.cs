@@ -52,6 +52,7 @@ namespace Pathfinding {
 						result.Add((Vector3)vertices[i]);
 					}
 				});
+#if !ASTAR_NO_GRID_GRAPH
 			} else if (graph is GridGraph) {
 				GetContours(graph as GridGraph, vertices => {
 					for (int j = vertices.Length - 1, i = 0; i < vertices.Length; j = i, i++) {
@@ -59,6 +60,7 @@ namespace Pathfinding {
 						result.Add((Vector3)vertices[i]);
 					}
 				}, 0);
+#endif
 			}
 			return result;
 		}
@@ -124,6 +126,7 @@ namespace Pathfinding {
 			});
 		}
 
+#if !ASTAR_NO_GRID_GRAPH
 		/// <summary>
 		/// Finds all contours of a collection of nodes in a grid graph.
 		///
@@ -236,5 +239,6 @@ namespace Pathfinding {
 				ListPool<Vector3>.Release(ref trace);
 			}
 		}
+#endif
 	}
 }

@@ -27,6 +27,24 @@ namespace Pathfinding {
 
 	/// <summary>Base class for all path types</summary>
 	public abstract class Path : IPathInternals {
+#if ASTAR_POOL_DEBUG
+		private string pathTraceInfo = "";
+		private List<string> claimInfo = new List<string>();
+		~Path() {
+			Debug.Log("Destroying " + GetType().Name + " instance");
+			if (claimed.Count > 0) {
+				Debug.LogWarning("Pool Is Leaking. See list of claims:\n" +
+					"Each message below will list what objects are currently claiming the path." +
+					" These objects have removed their reference to the path object but has not called .Release on it (which is bad).\n" + pathTraceInfo+"\n");
+				for (int i = 0; i < claimed.Count; i++) {
+					Debug.LogWarning("- Claim "+ (i+1) + " is by a " + claimed[i].GetType().Name + "\n"+claimInfo[i]);
+				}
+			} else {
+				Debug.Log("Some scripts are not using pooling.\n" + pathTraceInfo + "\n");
+			}
+		}
+#endif
+
 		/// <summary>Data for the thread calculating this path</summary>
 		protected PathHandler pathHandler;
 
@@ -485,6 +503,11 @@ namespace Pathfinding {
 		/// call the base function in inheriting types with base.Reset().
 		/// </summary>
 		protected virtual void Reset () {
+#if ASTAR_POOL_DEBUG
+			pathTraceInfo = "This path was got from the pool or created from here (stacktrace):\n";
+			pathTraceInfo += System.Environment.StackTrace;
+#endif
+
 			if (System.Object.ReferenceEquals(AstarPath.active, null))
 				throw new System.NullReferenceException("No AstarPath object found in the scene. " +
 					"Make sure there is one or do not create paths in Awake");
@@ -564,6 +587,9 @@ namespace Pathfinding {
 			}
 
 			claimed.Add(o);
+#if ASTAR_POOL_DEBUG
+			claimInfo.Add(o.ToString() + "\n\nClaimed from:\n" + System.Environment.StackTrace);
+#endif
 		}
 
 		/// <summary>
@@ -597,6 +623,9 @@ namespace Pathfinding {
 				// Need to use ReferenceEquals because it might be called from another thread
 				if (System.Object.ReferenceEquals(claimed[i], o)) {
 					claimed.RemoveAt(i);
+#if ASTAR_POOL_DEBUG
+					claimInfo.RemoveAt(i);
+#endif
 					if (!silent) {
 						releasedNotSilent = true;
 					}

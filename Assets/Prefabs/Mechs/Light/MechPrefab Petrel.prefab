@@ -115,7 +115,7 @@ MonoBehaviour:
   startEndModifier:
     addPoints: 0
     exactStartPoint: 3
-    exactEndPoint: 3
+    exactEndPoint: 0
     useRaycasting: 0
     mask:
       serializedVersion: 2
@@ -143,7 +143,7 @@ MonoBehaviour:
   equippedWeapon: {fileID: 114055854788749252, guid: 508def77bc7cb0d41b4f0a30395d9273,
     type: 2}
   modelHeight: 0
-  targetPosition: {x: 0, y: 0, z: 0}
+  len: 0
   oneArm: 0
   noArm: 0
   oneLeg: 0

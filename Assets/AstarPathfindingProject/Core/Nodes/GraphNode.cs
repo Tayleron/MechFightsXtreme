@@ -62,6 +62,7 @@ namespace Pathfinding {
 		/// </summary>
 		protected uint flags;
 
+#if !ASTAR_NO_PENALTY
 		/// <summary>
 		/// Penalty cost for walking on this node.
 		/// This can be used to make it harder/slower to walk over certain nodes.
@@ -71,6 +72,7 @@ namespace Pathfinding {
 		/// See: graph-updates (view in online documentation for working links)
 		/// </summary>
 		private uint penalty;
+#endif
 
 		/// <summary>
 		/// Graph which this node belongs to.
@@ -225,6 +227,7 @@ namespace Pathfinding {
 		/// See: graph-updates (view in online documentation for working links)
 		/// </summary>
 		public uint Penalty {
+#if !ASTAR_NO_PENALTY
 			get {
 				return penalty;
 			}
@@ -235,6 +238,10 @@ namespace Pathfinding {
 						"Penalty value applied: "+value);
 				penalty = value;
 			}
+#else
+			get { return 0U; }
+			set {}
+#endif
 		}
 
 		/// <summary>

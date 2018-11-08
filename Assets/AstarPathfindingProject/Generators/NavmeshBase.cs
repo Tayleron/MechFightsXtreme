@@ -13,11 +13,19 @@ namespace Pathfinding {
 
 	/// <summary>Base class for RecastGraph and NavMeshGraph</summary>
 	public abstract class NavmeshBase : NavGraph, INavmesh, INavmeshHolder, ITransformedGraph {
+#if ASTAR_RECAST_LARGER_TILES
+		// Larger tiles
+		public const int VertexIndexMask = 0xFFFFF;
+
+		public const int TileIndexMask = 0x7FF;
+		public const int TileIndexOffset = 20;
+#else
 		// Larger worlds
 		public const int VertexIndexMask = 0xFFF;
 
 		public const int TileIndexMask = 0x7FFFF;
 		public const int TileIndexOffset = 12;
+#endif
 
 		/// <summary>Size of the bounding box.</summary>
 		[JsonMember]
@@ -660,6 +668,14 @@ namespace Pathfinding {
 			// Midpoint between the two tiles
 			int midpoint = (int)Math.Round((Math.Max(t1coord, t2coord) * tileWorldSize) * Int3.Precision);
 
+			#if ASTARDEBUG
+			Vector3 v1 = new Vector3(-100, 0, -100);
+			Vector3 v2 = new Vector3(100, 0, 100);
+			v1[coord] = midpoint*Int3.PrecisionFactor;
+			v2[coord] = midpoint*Int3.PrecisionFactor;
+
+			Debug.DrawLine(v1, v2, Color.magenta);
+			#endif
 
 			TriangleMeshNode[] nodes1 = tile1.nodes;
 			TriangleMeshNode[] nodes2 = tile2.nodes;

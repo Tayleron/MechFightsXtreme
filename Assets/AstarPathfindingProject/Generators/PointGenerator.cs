@@ -116,6 +116,7 @@ namespace Pathfinding {
 
 
 			float maxDistSqr = constraint == null || constraint.constrainDistance ? AstarPath.active.maxNearestNodeDistanceSqr : float.PositiveInfinity;
+			maxDistSqr *= Int3.FloatPrecision * Int3.FloatPrecision;
 
 			var nnInfo = new NNInfoInternal(null);
 			long minDist = long.MaxValue;
@@ -130,7 +131,7 @@ namespace Pathfinding {
 					nnInfo.node = node;
 				}
 
-				if (dist < minConstDist && dist < maxDistSqr && (constraint == null || constraint.Suitable(node))) {
+				if (dist < minConstDist && (float)dist < maxDistSqr && (constraint == null || constraint.Suitable(node))) {
 					minConstDist = dist;
 					nnInfo.constrainedNode = node;
 				}
