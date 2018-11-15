@@ -157,8 +157,7 @@ MonoBehaviour:
   currentHex: {fileID: 0}
   rend: {fileID: 0}
   weapon: {fileID: 0}
-  equippedWeapon: {fileID: 114612892142656456, guid: b96d0c985a50f6947ad16d94c4958181,
-    type: 2}
+  equippedWeapon: {fileID: 0}
   currentWeaponGO: {fileID: 0}
   modelHeight: 0
   Autocannon: {fileID: 1880423651375020, guid: b96d0c985a50f6947ad16d94c4958181, type: 2}
@@ -172,3 +171,4 @@ MonoBehaviour:
   oneArm: 0
   noArm: 0
   oneLeg: 0
+  listOfWeapons: 

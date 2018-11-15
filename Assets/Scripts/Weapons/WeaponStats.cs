@@ -8,10 +8,12 @@ public class WeaponStats : MonoBehaviour {
 	public MechStats mech;
 
   public bool rdyToFire = true;
+	public int shotsRemaining;
 
 
   // Use this for initialization
   void Start () {
+		shotsRemaining = weapon.rateOfFire;
 		// Debug.Log("I am a: " + weapon.weaponName + " and I do: " + weapon.damage 
 		// + " damage.");		
 	}

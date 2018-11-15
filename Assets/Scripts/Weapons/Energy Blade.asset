@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Energy Blade
   damage: 15
+  shotsRemaining: 1
   rateOfFire: 1
   maxRange: 1
   minRange: 0

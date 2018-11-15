@@ -45,16 +45,29 @@ public class MechStats : MonoBehaviour {
 		" and I have: " + mech.movementRemaining + " movement remaining. I have: "
 		+ mech.hpTorso + " Torso Hp remaining." + " And I am located at: " + x + ", " + y);
 
+
     //testing weapon loading
     loadWeapon("Autocannon");
     loadWeapon("Laser");
+    loadWeapon("Flamer");
+    loadWeapon("Railgun");
+    setWepBools();
+
+    //equip a default weapon
+    if (WeaponsList.ContainsKey("00"))
+    {
+      equipWeapon("00");
+    }
+    //build the list of weapons to display in the GUI
+    listWeapons();
 
     // log to return my dictionary
     // foreach (var key in WeaponsList)
     // {
     //     Debug.Log(key);
     // }
-	}
+
+  }
 
   //References to WeaponPrefabs
   public GameObject Autocannon;
@@ -102,7 +115,63 @@ public class MechStats : MonoBehaviour {
 
   //Dictionary holding all weapons held by a mech
   //access with wepID to get a weapon GameObject
-  Dictionary<string, GameObject> WeaponsList = new Dictionary<string, GameObject>();
+  private Dictionary<string, GameObject> WeaponsList = new Dictionary<string, GameObject>();
+  public bool wep00 = false;
+  public bool wep01 = false;
+  public bool wep02 = false;
+  public bool wep03 = false;
+  public bool wep04 = false;
+  public bool wep05 = false;
+  public bool wep06 = false;
+  public bool wep07 = false;
+  public bool wep08 = false;
+  public bool wep09 = false;
+
+  private void setWepBools()
+  {
+    if (WeaponsList.ContainsKey("00"))
+    {
+      wep00 = true;
+    }
+    if (WeaponsList.ContainsKey("01"))
+    {
+      wep01 = true;
+    }
+    if (WeaponsList.ContainsKey("02"))
+    {
+      wep02 = true;
+    }
+    if (WeaponsList.ContainsKey("03"))
+    {
+      wep03 = true;
+    }
+    if (WeaponsList.ContainsKey("04"))
+    {
+      wep04 = true;
+    }
+    if (WeaponsList.ContainsKey("05"))
+    {
+      wep05 = true;
+    }
+    if (WeaponsList.ContainsKey("06"))
+    {
+      wep06 = true;
+    }
+    if (WeaponsList.ContainsKey("07"))
+    {
+      wep07 = true;
+    }
+    if (WeaponsList.ContainsKey("08"))
+    {
+      wep08 = true;
+    }
+    if (WeaponsList.ContainsKey("09"))
+    {
+      wep09 = true;
+    }
+  }
+
+
   //simple ID system value
   int id = 0;
   //req to set weapon IDs
@@ -113,19 +182,61 @@ public class MechStats : MonoBehaviour {
   {
     //determine the type of weapon
     determineWeapon(weaponToAdd);
+    OGName = weaponPrefabToSpawn.name;
     currentWeaponGO = Instantiate(weaponPrefabToSpawn);
-    wepID = string.Format("{0}{1}", weaponToAdd, id.ToString("00"));
+    currentWeaponGO.name = OGName;
+    wepID = string.Format("{0}", id.ToString("00"));
     WeaponsList.Add(wepID, currentWeaponGO);
     id++;
   }
 
-  void clearWeapons()
-  {
-    //remove one or all weapons from dictionary of weapons
-  }
-  public void equipWeapon()
+  public void equipWeapon(string wepID)
   {
     //set weapon from dictionary to be the equipped weapon, allowing it to shoot
+    currentWeaponGO = WeaponsList[wepID];
+    equippedWeapon = currentWeaponGO.GetComponent<WeaponStats>();
+    Debug.Log(equippedWeapon.name + " equipped");
+  }
+
+  //req for listing weapons in onGUI element
+  public string listOfWeapons;
+
+  public void listWeapons()
+  {
+    foreach (KeyValuePair<string, GameObject> item in WeaponsList)
+    {
+      listOfWeapons += string.Format(item.Key.ToString() +"-"+ item.Value.name.ToString() + " ");
+    }
+  }
+
+  //method to repair all damage from a mech
+  public void repairAll()
+  {
+    Debug.Log(mech.name + " Health restored to max.");
+    mech.hpTorso = mech.hpTorsoMax;
+    mech.hpHead = mech.hpHeadMax;
+    mech.hpArm = mech.hpArmMax;
+    mech.hpLeg = mech.hpLegMax;
+    mech.shieldPoints = mech.shieldPointsMax;
+  }
+  //method use to reset shields
+  public void repairShield()
+  {
+    mech.shieldPoints = mech.shieldPointsMax;
+  }
+  //method to restore TP
+  public void restoreTP()
+  {
+    mech.tpCurrent = mech.tpMax;
+  }
+  //method to reload weapons
+  public void reloadWeapons()
+  {
+    foreach (GameObject value in WeaponsList.Values)
+    {
+      value.GetComponent<WeaponStats>().rdyToFire = true;
+      value.GetComponent<WeaponStats>().shotsRemaining = value.GetComponent<WeaponStats>().weapon.rateOfFire;
+    }
   }
 
   void setCurrentHex() 
@@ -413,24 +524,7 @@ public class MechStats : MonoBehaviour {
 			Destroy(gameObject);
     }  
   }
-	//method to repair all damage from a mech
-	public void repairAll()
-	{
-		Debug.Log(mech.name + " Health restored to max.");
-    mech.hpTorso = mech.hpTorsoMax;
-    mech.hpHead = mech.hpHeadMax;
-    mech.hpArm = mech.hpArmMax;
-    mech.hpLeg = mech.hpLegMax;
-    mech.shieldPoints = mech.shieldPointsMax;
-	}
-  public void repairShield()
-  {
-    mech.shieldPoints = mech.shieldPointsMax;
-  }
-  public void restoreTP()
-  {
-    mech.tpCurrent = mech.tpMax;
-  }
+	
 	
 
 	void Update() {
