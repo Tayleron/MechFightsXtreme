@@ -146,14 +146,25 @@ public class MouseManager : MonoBehaviour {
 		}
 	}
 
+	public bool CR_running;
 	//method to perform an attack
 	void attack()
 	{
 		selectedWeapon = selectedMech.equippedWeapon;
-		for (int i = 0; i < selectedWeapon.weapon.rateOfFire; i++)
+		if (selectedWeapon.rdyToFire)
 		{
-			StartCoroutine(selection());
-	  }
+			//TODO: figure out how to set up rate of fire again. Something Changed and it's gone wrong
+			//It looks like all the coroutines are being executed at once, instead of one at a time
+			//it's causing the SelectedMech to be set to null
+			for (int i = 0; i < selectedWeapon.weapon.rateOfFire; i++)
+			{
+        StartCoroutine(selection());
+      }
+		}
+		else
+		{
+			Debug.Log(selectedWeapon + " not ready to fire.");
+		}
 	}
 	
 	//method to attack after a simple right click instead of using the GUI Attack button
@@ -171,11 +182,11 @@ public class MouseManager : MonoBehaviour {
 
   IEnumerator selection()
   {
+		CR_running = true;
 		selectedMechLast = selectedMech;
 		selectedMech = null;
     Debug.Log("Select Mech To Attack");
-    yield return new WaitUntil(() => selectedMech != null || Input.GetKey(KeyCode.Escape) || cancel);
-		
+		yield return new WaitUntil(() => selectedMech != null || Input.GetKey(KeyCode.Escape) || cancel);
 		//get the TP cost that will need to be spent based on the mech's Arm bools
 		if (selectedMechLast.noArm)
 		{
@@ -195,28 +206,31 @@ public class MouseManager : MonoBehaviour {
 		{
 			selectedMech = selectedMechLast;
 			Debug.Log("Attack Canceled");
-      yield break;
+			CR_running = false;
+			yield break;
 		}
 		//cancel if TpTest is too low
 		else if (selectedMechLast.mech.tpCurrent < TpTest)
 		{
-      selectedMech = selectedMechLast;
-      cancel = true;
-      cancel = false;
-      Debug.Log("TP too low");
+			selectedMech = selectedMechLast;
+			cancel = true;
+			cancel = false;
+			Debug.Log("TP too low");
+      CR_running = false;
       yield break;
 		}
 		//if a new mech is selected, attack it
 		else if (selectedMech != null && selectedMech != selectedMechLast)
-    {
+		{
 			//spend the TP required to attack with the selected weapon
-      selectedMechLast.spendTP(selectedWeapon.weapon.tpCost);
+			selectedMechLast.spendTP(selectedWeapon.weapon.tpCost);
 			//call the weapon's method of attack, passing it the attacked mech
-      selectedWeapon.atkMech(selectedMech);
-			//deselect mech
-      selectedMech = null;
-			yield break;
-    }
+			selectedWeapon.atkMech(selectedMech);
+			//reselect  original mech
+			selectedMech = selectedMechLast;
+      CR_running = false;
+      yield break;
+		}
   }
 
 	//temp GUI element to show selected mech stats + buttons

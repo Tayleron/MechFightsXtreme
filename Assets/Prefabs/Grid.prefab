@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1392246590373910}
+  m_IsPrefabAsset: 1
+--- !u!1 &1392246590373910
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4889546462621482}
+  - component: {fileID: 114832290637275820}
+  - component: {fileID: 114634336214622612}
+  m_Layer: 0
+  m_Name: Grid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4889546462621482
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1392246590373910}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114634336214622612
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1392246590373910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 632ae7eb1d4ce49d38a1e38ee7efe7c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guid: 35085c4d3592eb77-dfeb07268141e756
+--- !u!114 &114832290637275820
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1392246590373910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30356d2d0ca76e447b3cd5b9ce5daa65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Hex: {fileID: 1711373742880880, guid: cce472eccda056142a4be8bbf3b6966f, type: 2}
+  gridWidthInHexes: 20
+  gridHeightInHexes: 20
+  setDefaultElevation: 0
+  RandomOnOff: 1
+  waterPercent: 0.25
+  LabelsOnOff: 1
+  Vireo: {fileID: 1706490245696108, guid: d040cf2021e3b2140be4f242b8e71210, type: 2}
+  Shrike: {fileID: 1706490245696108, guid: a6009b48c3461af4db93c4619ac45852, type: 2}
+  Swift: {fileID: 1539270316518744, guid: 8b8e468cd846cfc4b870c5c4b78acab8, type: 2}
+  Petrel: {fileID: 1706490245696108, guid: 86984554b5e96744fb81de8025993e94, type: 2}
+  Batis: {fileID: 1601956781206476, guid: a2f640c08e3b32147947648cdd31e649, type: 2}
+  Kestrel: {fileID: 1706490245696108, guid: b367edbf14dce394ab63210034db5c2c, type: 2}
+  Korhaan: {fileID: 1706490245696108, guid: 85a9424ad4a4e834faaf812c9db311d0, type: 2}
+  Vanga: {fileID: 1706490245696108, guid: f4067998f5eff944eb3150c7693a4271, type: 2}
+  Crake: {fileID: 1601956781206476, guid: c97bb33ae6973764285f167e0ffce675, type: 2}
+  Jakamar: {fileID: 1706490245696108, guid: ac7d6241c56f1c54392382f3babe63c1, type: 2}
+  Apalis: {fileID: 1364589977321790, guid: 13be93799dc57b0409ce2c4ff680fc8e, type: 2}
+  Haast: {fileID: 1551848620446938, guid: cfd99c7596eedfd4a90d5c77f37bd6b5, type: 2}
+  Autocannon: {fileID: 1880423651375020, guid: b96d0c985a50f6947ad16d94c4958181, type: 2}
+  EnergyBlade: {fileID: 1267391265603364, guid: 9caf3e132ab984d47b603d16fcbe2bf0,
+    type: 2}
+  Flamer: {fileID: 1015273250079136, guid: 7b9e7aa874a16f34b887b6ebcbcd1497, type: 2}
+  GaussRifle: {fileID: 1663095820649082, guid: 508def77bc7cb0d41b4f0a30395d9273, type: 2}
+  Laser: {fileID: 1252489987710878, guid: 8310db04d2b2a5549b8ea24cfe7814b0, type: 2}
+  Railgun: {fileID: 1222535978700680, guid: a19c2f50364389c4d9b82fcf1dec1207, type: 2}
+  Rockets: {fileID: 1868005080023192, guid: 52e4980ecd20ec949a8ccee362df05ea, type: 2}
+  weaponPrefabToSpawn: {fileID: 0}

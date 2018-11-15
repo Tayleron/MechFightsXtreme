@@ -98,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 11400000, guid: f1d66f0cfce30364f84b6028748f48d2, type: 2}
   mech: {fileID: 0}
-  MM: {fileID: 0}
+  rdyToFire: 1
 --- !u!136 &136620266210247366
 CapsuleCollider:
   m_ObjectHideFlags: 1

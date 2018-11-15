@@ -42,14 +42,6 @@ public class GridManager : MonoBehaviour
   public GameObject Apalis;
   public GameObject Haast;
 
-  //References to WeaponPrefabs
-  public GameObject Autocannon;
-  public GameObject EnergyBlade;
-  public GameObject Flamer;
-  public GameObject GaussRifle;
-  public GameObject Laser;
-  public GameObject Railgun;
-  public GameObject Rockets;
 
   AstarPath AstarPath;
 
@@ -191,6 +183,7 @@ public class GridManager : MonoBehaviour
       mechPrefabToSpawn = Haast;
     }
   }
+
   //Unit Spawning method
   void spawnUnitAt(string mechToSpawn, string location)
   {
@@ -199,8 +192,8 @@ public class GridManager : MonoBehaviour
     GameObject myHex = hexValues[location];
     hexTran = myHex.transform;
     Instantiate(mechPrefabToSpawn, myHex.transform.position, Quaternion.identity, hexTran);
-
   }
+
   
   //Adding persistence
   void Awake () {

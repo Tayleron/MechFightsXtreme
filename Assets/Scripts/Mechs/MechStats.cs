@@ -6,12 +6,15 @@ using Pathfinding;
 
 public class MechStats : MonoBehaviour {
 
+  public GridManager GM;
+
 	public Mech mech;
 	public GameObject currentHex;
 	public Renderer rend;
 
 	public Weapon weapon;
 	public WeaponStats equippedWeapon;
+  public GameObject currentWeaponGO;
 	
 	
 	public float modelHeight;
@@ -33,13 +36,6 @@ public class MechStats : MonoBehaviour {
 		//rename the clone to the orginal name
 		mech.name = OGName;
 
-		//temp instantiate a weapon to test	
-		if (equippedWeapon != null)
-    {
-      OGName = equippedWeapon.name;
-      equippedWeapon = Instantiate(equippedWeapon);
-		  equippedWeapon.name = OGName;
-    }
 		//get the full height of the model
 		modelHeight = mech.MechPrefab.GetComponent<Renderer>().bounds.size.y;
     moveUnit(Vector3.zero, Vector3.zero);
@@ -48,9 +44,91 @@ public class MechStats : MonoBehaviour {
     Debug.Log("My name is: " + mech.mechName +
 		" and I have: " + mech.movementRemaining + " movement remaining. I have: "
 		+ mech.hpTorso + " Torso Hp remaining." + " And I am located at: " + x + ", " + y);
+
+    //testing weapon loading
+    loadWeapon("Autocannon");
+    loadWeapon("Laser");
+
+    // log to return my dictionary
+    // foreach (var key in WeaponsList)
+    // {
+    //     Debug.Log(key);
+    // }
 	}
 
-	void setCurrentHex() 
+  //References to WeaponPrefabs
+  public GameObject Autocannon;
+  public GameObject EnergyBlade;
+  public GameObject Flamer;
+  public GameObject GaussRifle;
+  public GameObject Laser;
+  public GameObject Railgun;
+  public GameObject Rockets;
+  //req for determineWeapon()
+  private GameObject weaponPrefabToSpawn;
+
+  //used to choose which weapon will be spawned
+  void determineWeapon(string weaponToAdd)
+  {
+    if (weaponToAdd == "Autocannon")
+    {
+      weaponPrefabToSpawn = Autocannon;
+    }
+    else if (weaponToAdd == "EnergyBlade")
+    {
+      weaponPrefabToSpawn = EnergyBlade;
+    }
+    else if (weaponToAdd == "Flamer")
+    {
+      weaponPrefabToSpawn = Flamer;
+    }
+    else if (weaponToAdd == "GaussRifle")
+    {
+      weaponPrefabToSpawn = GaussRifle;
+    }
+    else if (weaponToAdd == "Laser")
+    {
+      weaponPrefabToSpawn = Laser;
+    }
+    else if (weaponToAdd == "Railgun")
+    {
+      weaponPrefabToSpawn = Railgun;
+    }
+    else if (weaponToAdd == "Rockets")
+    {
+      weaponPrefabToSpawn = Rockets;
+    }
+  }
+
+  //Dictionary holding all weapons held by a mech
+  //access with wepID to get a weapon GameObject
+  Dictionary<string, GameObject> WeaponsList = new Dictionary<string, GameObject>();
+  //simple ID system value
+  int id = 0;
+  //req to set weapon IDs
+  string wepID;
+
+  //add weapon to list containing all the weapons available to this mech
+  void loadWeapon(string weaponToAdd)
+  {
+    //determine the type of weapon
+    determineWeapon(weaponToAdd);
+    currentWeaponGO = Instantiate(weaponPrefabToSpawn);
+    wepID = string.Format("{0}{1}", weaponToAdd, id.ToString("00"));
+    WeaponsList.Add(wepID, currentWeaponGO);
+    id++;
+  }
+
+  void clearWeapons()
+  {
+    //remove one or all weapons from dictionary of weapons
+  }
+  public void equipWeapon()
+  {
+    //set weapon from dictionary to be the equipped weapon, allowing it to shoot
+  }
+
+  void setCurrentHex() 
 	{ 
 		//get current hex and assign x and y values 
     currentHex = transform.parent.gameObject;
@@ -71,9 +149,9 @@ public class MechStats : MonoBehaviour {
   //Testing Pathing
   public void onPathComplete (Path p)
   {
-    foreach (Vector3 position in p.vectorPath)
+    foreach (GraphNode node in p.path)
     {
-      Debug.Log("Waypoint: " + position);
+      Debug.Log("Waypoint: " + (Vector3)node.position);
     }
     //set the position of the model to stand on the top of its parent hex
     transform.localPosition = new Vector3(0, 0, modelHeight / 1.5f);
@@ -354,14 +432,6 @@ public class MechStats : MonoBehaviour {
     mech.tpCurrent = mech.tpMax;
   }
 	
-	// void loadWeapons()
-	// {
-		
-	// }
-	// public void equipWeapon()
-	// {
-
-	// }
 
 	void Update() {
 		//Allows the Mech to always know what Hex it's located at.

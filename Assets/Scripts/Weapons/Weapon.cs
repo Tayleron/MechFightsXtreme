@@ -15,4 +15,5 @@ public class Weapon : ScriptableObject {
 	public int weight;
 
 	public GameObject weaponPrefab;
+
 }
