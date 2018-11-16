@@ -5,10 +5,10 @@ using UnityEngine.EventSystems;
 using Pathfinding;
 
 public class MouseManager : MonoBehaviour {
-
+	
 	public MechStats selectedMech;
 	public MechStats selectedMechLast;
-  Hex selectedHex;
+  public Hex selectedHex;
 	public WeaponStats selectedWeapon;
 
 	//req for camera drag controls
@@ -165,7 +165,7 @@ public class MouseManager : MonoBehaviour {
   private int TpTest;
 
   //method to perform an attack
-  void attack()
+  public void attack()
 	{
 		selectedWeapon = selectedMech.equippedWeapon;
 		shots = selectedWeapon.shotsRemaining;
@@ -239,132 +239,7 @@ public class MouseManager : MonoBehaviour {
 			}
 		}
   }
-	//simple statement to inform of readiness
-	private string rdyOrNot;
-
-	//temp GUI element to show selected mech stats + buttons
-  void OnGUI()
-  {
-    if (selectedMech != null)
-		{
-			GUI.Label(new Rect(10, 20, 100, 40), "Mech Selected: " + selectedMech.mech.name);
-			GUI.Label(new Rect(10, 55, 100, 25), selectedMech.mech.hpHead + " Head HP");			
-			GUI.Label(new Rect(10, 70, 100, 25), selectedMech.mech.hpTorso + " Torso HP");			
-			GUI.Label(new Rect(10, 85, 100, 25), selectedMech.mech.hpArm + " Arm HP");
-			GUI.Label(new Rect(10, 100, 100, 25), selectedMech.mech.hpLeg + " Leg HP");
-			GUI.Label(new Rect(10, 115, 100, 25), selectedMech.mech.shieldPoints + " Shields");
-			GUI.Label(new Rect(10, 130, 100, 25), selectedMech.mech.tpCurrent + "/" + selectedMech.mech.tpMax + " TP");
-			
-			//if the equipped Weapon is ready or not
-			if (selectedMech.equippedWeapon.rdyToFire)
-			{
-				rdyOrNot = ": Ready";
-			}
-			else
-			{
-				rdyOrNot = ": Not Ready";
-			}
-
-			GUI.Label(new Rect(10, 145, 170, 40), "Equipped Weapon:          " + selectedMech.equippedWeapon.name + rdyOrNot + " "
-																						+ selectedMech.equippedWeapon.shotsRemaining + "/" 
-																						+ selectedMech.equippedWeapon.weapon.rateOfFire);
-			
-			if (selectedMech.wep00)
-			{
-				if(GUI.Button(new Rect(10, 190, 30, 25), "00")) 
-				{
-					selectedMech.equipWeapon("00");
-				}
-			}
-			if (selectedMech.wep01)
-			{
-				if(GUI.Button(new Rect(40, 190, 30, 25), "01")) 
-				{
-					selectedMech.equipWeapon("01");
-				}
-			}
-			if (selectedMech.wep02)
-			{
-				if(GUI.Button(new Rect(70, 190, 30, 25), "02")) 
-				{
-					selectedMech.equipWeapon("02");
-				}
-			}
-			if (selectedMech.wep03)
-			{
-				if(GUI.Button(new Rect(100, 190, 30, 25), "03")) 
-				{
-					selectedMech.equipWeapon("03");
-				}	
-			}
-			if (selectedMech.wep04)
-			{
-				if(GUI.Button(new Rect(130, 190, 30, 25), "04")) 
-				{
-					selectedMech.equipWeapon("04");
-				}
-			}
-			if (selectedMech.wep05)
-			{
-				if(GUI.Button(new Rect(10, 220, 30, 25), "05")) 
-				{
-					selectedMech.equipWeapon("05");
-				}
-			}
-			if(selectedMech.wep06)
-			{	
-				if(GUI.Button(new Rect(40, 220, 30, 25), "06")) 
-				{
-					selectedMech.equipWeapon("06");
-				}
-			}	
-			if (selectedMech.wep07)
-			{	if(GUI.Button(new Rect(70, 220, 30, 25), "07")) 
-				{
-					selectedMech.equipWeapon("07");
-				}
-			}
-			if (selectedMech.wep08)
-			{
-				if(GUI.Button(new Rect(100, 220, 30, 25), "08")) 
-				{
-					selectedMech.equipWeapon("08");
-				}
-			}
-			if (selectedMech.wep09)
-			{
-				if (GUI.Button(new Rect(130, 220, 30, 25), "09"))
-				{
-          selectedMech.equipWeapon("09");
-        }
-			}
-			if(GUI.Button(new Rect(10, 250, 100, 25), "Reset Health")) 
-			{
-				selectedMech.repairAll();
-			}
-			if(GUI.Button(new Rect(10, 280, 100, 25), "Reset Shield")) 
-			{
-				selectedMech.repairShield();
-			}
-			if(GUI.Button(new Rect(10, 310, 100, 25), "Restore TP")) 
-			{
-        selectedMech.restoreTP();
-			}
-			if(GUI.Button(new Rect(10, 340, 100, 25), "Attack")) 
-			{
-        attack();
-			}
-			if(GUI.Button(new Rect(10, 370, 100, 25), "Reload")) 
-			{
-        selectedMech.reloadWeapons();
-			}
-      GUI.Label(new Rect(120, 300, 100, 100), "Weapons: " + selectedMech.listOfWeapons);
-    }
-		if (selectedHex != null)
-		{
-    	GUI.Label(new Rect(10, 0, 100, 20), selectedHex.name + " selected");
-  	}
-  }
+	
 }
 
 		
