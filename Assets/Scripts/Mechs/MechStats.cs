@@ -314,35 +314,42 @@ public class MechStats : MonoBehaviour {
 		//Gauss Rifle deals double damage to shields and normal damage after that.
     //this If statement also encapsulates all other weapon's damage vs shields
 		//tested: this logic seems to work
-		if(weaponName == "Gauss Rifle")
-		{
-			shieldDmg = dmgToTake;
-			for (int i = 0; i < dmgToTake; i++)
-			{
-				shield -= 2;
-				shieldDmg -= 1;
-				if (shield <= 0)
-				{
-					break;
-				}
-			}
-      dmgToTake = shieldDmg;
-		} else
+    if(shield > 0)
     {
-      shieldDmg = dmgToTake;
-      for (int i = 0; i < dmgToTake; i++)
+      if(weaponName == "Gauss Rifle")
       {
-        shield -= 1;
-        shieldDmg -= 1;
-        if (shield <= 0)
+        shieldDmg = dmgToTake;
+        for (int i = 0; i < dmgToTake; i++)
         {
-          break;
+          shield -= 2;
+          shieldDmg -= 1;
+          if (shield <= 0)
+          {
+            break;
+          }
         }
+        dmgToTake = shieldDmg;
+      } else
+      {
+        shieldDmg = dmgToTake;
+        for (int i = 0; i < dmgToTake; i++)
+        {
+          shield -= 1;
+          shieldDmg -= 1;
+          if (shield <= 0)
+          {
+            break;
+          }
+        }
+        //post shield damage stats, how much damage to deal to the actual mech
+        // and how many points of shield are left
+        dmgToTake = shieldDmg;
       }
-      //post shield damage stats, how much damage to deal to the actual mech
-      // and how many points of shield are left
-      dmgToTake = shieldDmg;
       shld = shield;
+      if(shld < 0)
+      {
+        shld = 0;
+      }
     }
 
 		//autocannons reduce their dmg by double the armor value
