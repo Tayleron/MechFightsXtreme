@@ -168,6 +168,17 @@ MonoBehaviour:
   Laser: {fileID: 1252489987710878, guid: 8310db04d2b2a5549b8ea24cfe7814b0, type: 2}
   Railgun: {fileID: 1222535978700680, guid: a19c2f50364389c4d9b82fcf1dec1207, type: 2}
   Rockets: {fileID: 1868005080023192, guid: 52e4980ecd20ec949a8ccee362df05ea, type: 2}
+  wep00: 0
+  wep01: 0
+  wep02: 0
+  wep03: 0
+  wep04: 0
+  wep05: 0
+  wep06: 0
+  wep07: 0
+  wep08: 0
+  wep09: 0
+  listOfWeapons: 
   oneArm: 0
   noArm: 0
   oneLeg: 0

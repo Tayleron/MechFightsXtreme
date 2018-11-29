@@ -23,7 +23,7 @@ public class onGUI : MonoBehaviour {
       GUI.Label(new Rect(10, 130, 100, 25), mm.selectedMech.mech.tpCurrent + "/" + mm.selectedMech.mech.tpMax + " TP");
 
       //if the equipped Weapon is ready or not
-      if (mm.selectedMech.equippedWeapon.rdyToFire)
+      if (mm.selectedMech.equippedWeaponStats.rdyToFire)
       {
         rdyOrNot = ": Ready";
       }
@@ -32,9 +32,9 @@ public class onGUI : MonoBehaviour {
         rdyOrNot = ": Not Ready";
       }
 
-      GUI.Label(new Rect(10, 145, 170, 40), "Equipped Weapon:          " + mm.selectedMech.equippedWeapon.name + rdyOrNot + " "
-                                            + mm.selectedMech.equippedWeapon.shotsRemaining + "/"
-                                            + mm.selectedMech.equippedWeapon.weapon.rateOfFire);
+      GUI.Label(new Rect(10, 145, 170, 40), "Equipped Weapon:          " + mm.selectedMech.equippedWeaponStats.name + rdyOrNot + " "
+                                            + mm.selectedMech.equippedWeaponStats.shotsRemaining + "/"
+                                            + mm.selectedMech.equippedWeaponStats.weapon.rateOfFire);
 
       if (mm.selectedMech.wep00)
       {

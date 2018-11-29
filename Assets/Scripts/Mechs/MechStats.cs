@@ -13,11 +13,13 @@ public class MechStats : MonoBehaviour {
 	public Renderer rend;
 
 	public Weapon weapon;
-	public WeaponStats equippedWeapon;
+	public WeaponStats equippedWeaponStats;
   public GameObject currentWeaponGO;
+  public Transform mechTrans;
 	
 	
 	public float modelHeight;
+  public float wepModelHeight;
 	private string OGName;
 
 	private int x;
@@ -35,6 +37,8 @@ public class MechStats : MonoBehaviour {
     mech = Instantiate(mech);
 		//rename the clone to the orginal name
 		mech.name = OGName;
+    mechTrans = GetComponent<Transform>();
+
 
 		//get the full height of the model
 		modelHeight = mech.MechPrefab.GetComponent<Renderer>().bounds.size.y;
@@ -78,7 +82,7 @@ public class MechStats : MonoBehaviour {
   public GameObject Railgun;
   public GameObject Rockets;
   //req for determineWeapon()
-  private GameObject weaponPrefabToSpawn;
+  public GameObject weaponPrefabToSpawn;
 
   //used to choose which weapon will be spawned
   void determineWeapon(string weaponToAdd)
@@ -183,8 +187,11 @@ public class MechStats : MonoBehaviour {
     //determine the type of weapon
     determineWeapon(weaponToAdd);
     OGName = weaponPrefabToSpawn.name;
-    currentWeaponGO = Instantiate(weaponPrefabToSpawn);
+    currentWeaponGO = Instantiate(weaponPrefabToSpawn) as GameObject;
     currentWeaponGO.name = OGName;
+    currentWeaponGO.transform.SetParent(mechTrans);
+    wepModelHeight = currentWeaponGO.GetComponent<Renderer>().bounds.size.y;
+    currentWeaponGO.transform.position = new Vector3(mechTrans.position.x, (modelHeight / 2) + (wepModelHeight / 2), mechTrans.position.z);
     wepID = string.Format("{0}", id.ToString("00"));
     WeaponsList.Add(wepID, currentWeaponGO);
     id++;
@@ -192,10 +199,12 @@ public class MechStats : MonoBehaviour {
 
   public void equipWeapon(string wepID)
   {
+    currentWeaponGO.GetComponent<Renderer>().enabled = false;
     //set weapon from dictionary to be the equipped weapon, allowing it to shoot
     currentWeaponGO = WeaponsList[wepID];
-    equippedWeapon = currentWeaponGO.GetComponent<WeaponStats>();
-    Debug.Log(equippedWeapon.name + " equipped");
+    equippedWeaponStats = currentWeaponGO.GetComponent<WeaponStats>();
+    currentWeaponGO.GetComponent<Renderer>().enabled = true;
+    Debug.Log(equippedWeaponStats.name + " equipped");
   }
 
   //req for listing weapons in onGUI element

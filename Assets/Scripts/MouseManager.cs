@@ -73,7 +73,7 @@ public class MouseManager : MonoBehaviour {
 					MouseOver_Hex(ourHitObject);
 				}
 				//Mouse over a mech
-				else if (ourHitObject.GetComponent<MechStats>() != null)
+				else if (ourHitObject.GetComponent<MechStats>() != null || ourHitObject.GetComponent<WeaponStats>() != null)
 				{
 					MouseOver_Mech(ourHitObject);
 					MouseOver_Attack();
@@ -144,7 +144,14 @@ public class MouseManager : MonoBehaviour {
 		if (Input.GetButtonDown("Fire1")) 
 		{
 			//select the mech you click on
-			selectedMech = ourHitObject.GetComponent<MechStats>();
+			if (ourHitObject.GetComponent<MechStats>())
+			{
+        selectedMech = ourHitObject.GetComponent<MechStats>();
+			} else if (ourHitObject.GetComponent<WeaponStats>())
+			{
+				selectedMech = ourHitObject.GetComponentInParent<MechStats>();
+			}
+			
 			Debug.Log(selectedMech.mech.name + " Selected. " + selectedMech.mech.hpTorso + " Torso HP remaining." );
 		}
 	}
@@ -167,9 +174,9 @@ public class MouseManager : MonoBehaviour {
   //method to perform an attack
   public void attack()
 	{
-		selectedWeapon = selectedMech.equippedWeapon;
+		selectedWeapon = selectedMech.equippedWeaponStats;
 		shots = selectedWeapon.shotsRemaining;
-		Debug.Log(shots);
+		// Debug.Log(shots);
 		if (selectedWeapon.rdyToFire && shots > 0)
 		{
 			//test if TP is high enough to use the weapon
@@ -227,7 +234,7 @@ public class MouseManager : MonoBehaviour {
 			selectedMech = selectedMechLast;
       shots--;
 			selectedWeapon.shotsRemaining = shots;
-			Debug.Log(shots);
+			// Debug.Log(shots);
 			if (shots > 0)
 			{
         yield return StartCoroutine(selection());
