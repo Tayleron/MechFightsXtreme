@@ -27,9 +27,9 @@ public class MouseManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//Do nothing if mousing over UI buttons
+		//Not Working with current UI
 		if (EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0)) 
 		{
-			Debug.Log("check");
 			return;
 		} else
 		{	
@@ -77,7 +77,7 @@ public class MouseManager : MonoBehaviour {
 				{
 					MouseOver_Mech(ourHitObject);
 					MouseOver_Attack();
-				}
+        }
 			}
 			
 			//add scroll wheel zoom
@@ -246,7 +246,6 @@ public class MouseManager : MonoBehaviour {
 			}
 		}
   }
-	
 }
 
 		

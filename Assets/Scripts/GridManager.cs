@@ -128,8 +128,7 @@ public class GridManager : MonoBehaviour
   private GameObject mechPrefabToSpawn;
   //req for spawner to get Hex Transform/Location
   private Transform hexTran;
-  //x,y location and name of mech to spawn
-  private string CoordsToSpawnAt;
+  //name of mech to spawn
   private string mechToSpawn;
   //method containing If statements to figure out which mech should be spawned
   public void determineMech(string mechToSpawn)
@@ -194,6 +193,32 @@ public class GridManager : MonoBehaviour
     Instantiate(mechPrefabToSpawn, myHex.transform.position, Quaternion.identity, hexTran);
   }
 
+  public GameObject flagRed;
+  public GameObject flagBlue;
+
+  private GameObject flagPrefab;
+
+  void determineTeamColor(string teamColor)
+  {
+    if (teamColor == "Red")
+    {
+      flagPrefab = flagRed;
+    } else if (teamColor =="Blue")
+    {
+      flagPrefab = flagBlue;
+    }
+  }
+
+  //Flag Spawn
+  void spawnFlagAt(string teamColor, string location)
+  {
+   determineTeamColor(teamColor);
+
+    GameObject myHex = hexValues[location];
+    hexTran = myHex.transform;
+    Instantiate(flagPrefab, myHex.transform.position, Quaternion.identity, hexTran);
+  }
+
   
   //Adding persistence
   void Awake () {
@@ -210,6 +235,8 @@ public class GridManager : MonoBehaviour
 		setSizes();
 		createGrid();
     AstarPath.active.Scan();
+    spawnFlagAt("Red", "2,2");
+    spawnFlagAt("Blue", "18,18");
     spawnUnitAt("Petrel", "10,14");
     spawnUnitAt("Vanga", "8,14");
     spawnUnitAt("Jakamar", "12,16");

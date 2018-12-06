@@ -390,8 +390,6 @@ public class MechStats : MonoBehaviour {
 		{
 			dmg = 5;
 		}
-
-		Debug.Log("Damage dealt: " + dmg);
 	}
 
   public void spendTP(int weaponTP)
@@ -408,7 +406,6 @@ public class MechStats : MonoBehaviour {
     { //normal TP cost if arms are normal
       mech.tpCurrent -= weaponTP;
     }
-    Debug.Log("new TP " + mech.tpCurrent + "/" + mech.tpMax);
   }
 
   //req for one arm/no arm implimentation
