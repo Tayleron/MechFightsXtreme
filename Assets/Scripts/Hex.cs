@@ -22,6 +22,23 @@ public class Hex : MonoBehaviour {
   private int ElevationLast;
 	public bool isWater = false;
 	public bool isRamp = false;
+
+  //flags
+  public Flag flag;
+  public bool hasFlag = false;
+  
+  void flagCheck()
+  {
+    if (GetComponentInChildren<Flag>() != null)
+    {
+      hasFlag = true;
+      flag = GetComponentInChildren<Flag>();
+    }
+    else
+    {
+        hasFlag = false;
+    }
+  }
  
 	// Use this for initialization
 	void Start () {
@@ -83,6 +100,8 @@ public class Hex : MonoBehaviour {
 		WaterCheck();
 		//Check for Ramp
 		RampCheck();
+    //Check for flags
+    flagCheck();
 	}
 }
 

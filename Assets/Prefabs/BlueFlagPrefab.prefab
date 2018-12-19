@@ -215,6 +215,7 @@ MonoBehaviour:
   flagMat: {fileID: 2100000, guid: ebf87def3672b72478397ac9353728b4, type: 2}
   currentHex: {fileID: 0}
   modelHeight: 0
+  teamColor: blue
 --- !u!136 &136645236285171718
 CapsuleCollider:
   m_ObjectHideFlags: 1

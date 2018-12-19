@@ -12,12 +12,15 @@ public class Flag : MonoBehaviour {
   public GameObject currentHex;
   public float modelHeight;
 
+	public string teamColor;
+
   // private int x;
   // private int y;
 	
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
     setCurrentHex();
 
 		transFlagCloth = GOFlagStick.transform.Find("flagCloth");
@@ -29,14 +32,16 @@ public class Flag : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 		
 	}
   
-	void setCurrentHex()
+	public void setCurrentHex()
   {
     //get current hex and assign x and y values 
     currentHex = transform.parent.gameObject;
+		currentHex.GetComponent<Hex>().flag = this;
     // x = currentHex.GetComponent<Hex>().x;
     // y = currentHex.GetComponent<Hex>().y;
   }

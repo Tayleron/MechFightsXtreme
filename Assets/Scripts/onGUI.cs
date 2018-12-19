@@ -127,6 +127,10 @@ public class onGUI : MonoBehaviour {
         mm.selectedMech.reloadWeapons();
       }
       GUI.Label(new Rect(120, 300, 100, 100), "Weapons: " + mm.selectedMech.listOfWeapons);
+      if (GUI.Button(new Rect(200, 370, 120, 25), "Pick Up/Drop Flag"))
+      {
+        mm.selectedMech.flagInteract();
+      }
     }
     if (mm.selectedHex != null)
     {

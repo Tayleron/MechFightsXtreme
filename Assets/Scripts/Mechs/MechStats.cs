@@ -9,7 +9,8 @@ public class MechStats : MonoBehaviour {
   public GridManager GM;
 
 	public Mech mech;
-	public GameObject currentHex;
+	public GameObject currentHexGO;
+  public Hex currentHexHex;
 	public Renderer rend;
 
 	public Weapon weapon;
@@ -24,6 +25,8 @@ public class MechStats : MonoBehaviour {
 
 	private int x;
 	private int y;
+
+  public string teamColor;
 
 	
   void Start()
@@ -70,7 +73,18 @@ public class MechStats : MonoBehaviour {
     // {
     //     Debug.Log(key);
     // }
+  }
 
+  public void setTeamColor(string newTeamColor)
+  {
+    teamColor = newTeamColor;
+  }
+
+  void Update()
+  {
+    //Allows the Mech to always know what Hex it's located at.
+    //Is this important? does it need to be constant? can it be called only when needed?
+    setCurrentHex();
   }
 
   //References to WeaponPrefabs
@@ -248,14 +262,38 @@ public class MechStats : MonoBehaviour {
     }
   }
 
-  void setCurrentHex() 
-	{ 
-		//get current hex and assign x and y values 
-    currentHex = transform.parent.gameObject;
-    x = currentHex.GetComponent<Hex>().x;
-    y = currentHex.GetComponent<Hex>().y;
+  public void flagInteract()
+  {    
+    //check if the hex contains an enemy flag and ignore allied flags
+    if (currentHexHex.hasFlag)
+    {
+      //pick up flag if enemy
+      if (currentHexHex.flag.teamColor != teamColor)
+      {
+        //pick up the flag
+        Debug.Log("Picked up enemy flag");
+        currentHexHex.flag.transform.parent = transform;
+      }
+      //leave flag if allied
+      else
+      {
+        Debug.Log("This is an allied flag");
+      }
+    }
+    else
+    {
+      Debug.Log("Hex does not contain a flag");
+    }
   }
 
+  void setCurrentHex() 
+	{
+    currentHexGO = transform.parent.gameObject;
+    currentHexHex = currentHexGO.GetComponent<Hex>();
+		//get current hex and assign x and y values 
+    x = currentHexHex.x;
+    y = currentHexHex.y;
+  }
 
   //Testing Pathing
   Seeker seeker;
@@ -524,6 +562,12 @@ public class MechStats : MonoBehaviour {
       if (oneLeg && mech.hpLeg <= 0)
       {
         Debug.Log(mech.name + " final leg destroyed. Mech destroyed.");
+        //drop the flag
+        if (GetComponentInChildren<Flag>())
+        {
+          GetComponentInChildren<Flag>().transform.parent = currentHexHex.transform;
+        }
+        //destory the mech/gameObject
         Destroy(gameObject);
       }
       //increase TP per move + 1
@@ -533,18 +577,13 @@ public class MechStats : MonoBehaviour {
     if (mech.hpTorso <= 0 || mech.hpHead <= 0)
     {
 			Debug.Log(mech.name + " destroyed.");
-			//Destroy the mech/gameObject
-			Destroy(gameObject);
+      //drop the flag
+      if (GetComponentInChildren<Flag>())
+      {
+        GetComponentInChildren<Flag>().transform.parent = currentHexHex.transform;
+      }
+      //Destroy the mech/gameObject
+      Destroy(gameObject);
     }  
   }
-	
-	
-
-	void Update() {
-		//Allows the Mech to always know what Hex it's located at.
-		//Is this important? does it need to be constant? can it be called only when needed?
-    setCurrentHex();
-  }
-
-
 }

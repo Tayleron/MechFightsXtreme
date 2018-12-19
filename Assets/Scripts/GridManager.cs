@@ -184,13 +184,14 @@ public class GridManager : MonoBehaviour
   }
 
   //Unit Spawning method
-  void spawnUnitAt(string mechToSpawn, string location)
+  void spawnUnitAt(string mechToSpawn, string location, string teamColor)
   {
     determineMech(mechToSpawn);
 
     GameObject myHex = hexValues[location];
     hexTran = myHex.transform;
-    Instantiate(mechPrefabToSpawn, myHex.transform.position, Quaternion.identity, hexTran);
+    GameObject newMech = Instantiate(mechPrefabToSpawn, myHex.transform.position, Quaternion.identity, hexTran);
+    newMech.GetComponent<MechStats>().setTeamColor(teamColor);
   }
 
   public GameObject flagRed;
@@ -237,10 +238,10 @@ public class GridManager : MonoBehaviour
     AstarPath.active.Scan();
     spawnFlagAt("Red", "2,2");
     spawnFlagAt("Blue", "18,18");
-    spawnUnitAt("Petrel", "10,14");
-    spawnUnitAt("Vanga", "8,14");
-    spawnUnitAt("Jakamar", "12,16");
-    spawnUnitAt("Kestrel", "6,16");
+    spawnUnitAt("Petrel", "10,14", "Red");
+    spawnUnitAt("Vanga", "8,14", "Red");
+    spawnUnitAt("Jakamar", "12,16", "Blue");
+    spawnUnitAt("Kestrel", "6,16", "Blue");
 	}
 
   //GUI buttons to allow for changes
