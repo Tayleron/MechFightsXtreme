@@ -322,7 +322,7 @@ public class MechStats : MonoBehaviour {
   private string hitLoc;
 
   //figure out what location was randomly hit
-  //maybe I could conbine this with the damaging if method? Far future thing.
+  //maybe I could combine this with the damaging if method? Far future thing.
   public void determineHitLoc()
   {
     randHit = Random.value;

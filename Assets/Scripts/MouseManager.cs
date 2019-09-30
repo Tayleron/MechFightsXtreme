@@ -22,8 +22,8 @@ public class MouseManager : MonoBehaviour {
 	
 	void Start() {
     
-
   }
+
 	// Update is called once per frame
 	void Update () {
 		//Do nothing if mousing over UI buttons
